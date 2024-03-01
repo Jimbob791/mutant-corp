@@ -6,10 +6,10 @@ using System;
 public class PlayerMove : MonoBehaviour
 {
     [Header("Movement Control")]
-    [SerializeField] float moveSpeed;
+    public float moveSpeed;
     [SerializeField] float groundAccel;
     [SerializeField] float airAccel;
-    [SerializeField] float jumpForce;
+    public float jumpForce;
     [SerializeField] float slowDown;
     [SerializeField] float gravity;
 

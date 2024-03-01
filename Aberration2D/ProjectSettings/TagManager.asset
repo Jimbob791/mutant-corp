@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Platforms
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -14,10 +15,10 @@ TagManager:
   - UI
   - Player
   - Platforms
-  - Enemy
+  - Enemies
   - Projectiles
   - Hazard
-  - 
+  - Items
   - 
   - 
   - 

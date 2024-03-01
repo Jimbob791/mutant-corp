@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [HideInInspector] public Vector3 desiredVelocity;
+    public int damage;
 
     Rigidbody2D rb;
 
@@ -23,6 +24,15 @@ public class Bullet : MonoBehaviour
     {
         if (col.gameObject.tag == "Platforms")
         {
+            Destroy(this.gameObject);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Enemy")
+        {
+            col.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
             Destroy(this.gameObject);
         }
     }

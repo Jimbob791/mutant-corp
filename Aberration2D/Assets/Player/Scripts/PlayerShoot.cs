@@ -5,23 +5,26 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     [Header("Gun Config")]
-    [SerializeField] float fireRate;
-    [SerializeField] int magazineSize;
-    [SerializeField] float reloadTime;
-    [SerializeField] float bloomAngle;
+    public float fireRate;
+    public float recoil;
+    public int magazineSize;
+    public float reloadTime;
+    public float bloomAngle;
     [SerializeField] Transform muzzlePoint;
 
     [Header("Bullet Config")]
-    [SerializeField] float damage;
-    [SerializeField] float bulletSpeed;
-    [SerializeField] float range;
-    [SerializeField] GameObject bullet;
+    public int damage;
+    public float bulletSpeed;
+    public float range;
+    public GameObject bullet;
 
     [Header("References")]
     [SerializeField] GameObject gun;
 
     PlayerAnimation pa;
+    PlayerRoll pr;
     Animator anim;
+    SpriteRenderer gunRenderer;
 
     bool canShoot = true;
     bool reloading = false;
@@ -34,15 +37,24 @@ public class PlayerShoot : MonoBehaviour
     {
         anim = gun.GetComponent<Animator>();
         pa = GetComponent<PlayerAnimation>();
+        pr = GetComponent<PlayerRoll>();
+        gunRenderer = gun.transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         magazine = magazineSize;
     }
 
     void Update()
     {
+        RollingCheck();
+
         RotateGun();
 
         Shoot();
+    }
+
+    private void RollingCheck()
+    {
+        gunRenderer.enabled = !pr.rolling;
     }
 
     private void RotateGun()
@@ -59,7 +71,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void Shoot()
     {
-        if (Input.GetMouseButton(0) && canShoot && !reloading)
+        if (Input.GetMouseButton(0) && canShoot && !reloading && !pr.rolling)
         {
             canShoot = false;
 
@@ -71,6 +83,8 @@ public class PlayerShoot : MonoBehaviour
             GameObject newBullet = Instantiate(bullet, muzzlePoint.position, Quaternion.identity);
             newBullet.transform.rotation = Quaternion.Euler(0f, 0f, bulletRotZ);
             newBullet.GetComponent<Bullet>().desiredVelocity = shootDir * bulletSpeed;
+            newBullet.GetComponent<Bullet>().damage = damage;
+            Destroy(newBullet, range);
             StartCoroutine(ResetShoot());
 
             if (Random.Range(-5, 5) <= 0) {

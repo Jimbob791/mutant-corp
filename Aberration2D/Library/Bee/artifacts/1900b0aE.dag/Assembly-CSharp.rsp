@@ -396,6 +396,10 @@
 "Assets/Items/Scripts/ItemList.cs"
 "Assets/Items/Scripts/ItemPickup.cs"
 "Assets/Items/Scripts/ItemSpawner.cs"
+"Assets/Items/Scripts/ItemStorage.cs"
+"Assets/Mutation/Scripts/MutationManager.cs"
+"Assets/Mutation/Scripts/MutationObject.cs"
+"Assets/Mutation/Scripts/Mutations.cs"
 "Assets/Player/Scripts/Player.cs"
 "Assets/Player/Scripts/PlayerAnimation.cs"
 "Assets/Player/Scripts/PlayerHealth.cs"
@@ -404,6 +408,8 @@
 "Assets/Player/Scripts/PlayerRoll.cs"
 "Assets/Player/Scripts/PlayerShoot.cs"
 "Assets/Player/Scripts/PlayerStats.cs"
+"Assets/Scenes/Scripts/GameManager.cs"
+"Assets/UI/Scripts/HealthBar.cs"
 -langversion:9.0
 
 /deterministic

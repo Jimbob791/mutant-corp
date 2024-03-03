@@ -9,6 +9,7 @@ public class FlyingEnemy : MonoBehaviour
     [SerializeField] float turnAccel;
     [SerializeField] float avoidAccel;
     [SerializeField] float distance;
+    [SerializeField] float aggroDistance;
 
     [Space]
 
@@ -39,6 +40,11 @@ public class FlyingEnemy : MonoBehaviour
     private void GetDirection()
     {
         Vector3 target = player.transform.position - transform.position;
+        
+        if (Vector3.Distance(transform.position, player.transform.position) > aggroDistance)
+        {
+            target = Vector3.zero;
+        }
         if (Vector3.Distance(transform.position, player.transform.position) < distance)
         {
             target = -target;

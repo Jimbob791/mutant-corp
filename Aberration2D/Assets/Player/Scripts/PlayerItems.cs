@@ -13,11 +13,21 @@ public class PlayerItems : MonoBehaviour
             if (items[i].name == item.GetName())
             {
                 items[i].stacks += 1;
-                items[i].item.OnPickup(Player.instance, items[i].stacks);
+                items[i].item.OnPickup(items[i].stacks);
+                PlayerStats.instance.SetPlayerStats();
                 return;
             }
         }
         items.Add(new ItemList(item, item.GetName(), 1));
-        items[items.Count - 1].item.OnPickup(Player.instance, 1);
+        items[items.Count - 1].item.OnPickup(1);
+        PlayerStats.instance.SetPlayerStats();
+    }
+
+    public void Reload()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            items[i].item.OnReload(items[i].stacks);
+        }
     }
 }

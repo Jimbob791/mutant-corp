@@ -17,7 +17,12 @@ public abstract class Item
 
     }
 
-    public virtual void OnPickup(GameObject player, int stacks)
+    public virtual void OnPickup(int stacks)
+    {
+
+    }
+
+    public virtual void OnReload(int stacks)
     {
 
     }
@@ -30,10 +35,10 @@ public class Loudener : Item
         return "Loudener";
     }
 
-    public override void OnPickup(GameObject player, int stacks)
+    public override void OnPickup(int stacks)
     {
-        player.GetComponent<PlayerShoot>().damage += Mathf.RoundToInt(player.GetComponent<PlayerStats>().damage * 0.1f);
-        player.GetComponent<PlayerShoot>().bloomAngle += 0.25f;
+        PlayerStats.instance.damage += 2;
+        PlayerStats.instance.bloomAngle += 2;
     }
 }
 
@@ -44,10 +49,10 @@ public class FleshBoots : Item
         return "Boots of Flesh";
     }
 
-    public override void OnPickup(GameObject player, int stacks)
+    public override void OnPickup(int stacks)
     {
-        player.GetComponent<PlayerMove>().moveSpeed += 0.1f;
-        player.GetComponent<PlayerMove>().jumpForce -= 0.1f;
+        PlayerStats.instance.moveSpeed += 0.1f;
+        PlayerStats.instance.jumpForce += 0.1f;
     }
 }
 
@@ -58,9 +63,98 @@ public class MutantBullets : Item
         return "Mutant Bullets";
     }
 
-    public override void OnPickup(GameObject player, int stacks)
+    public override void OnPickup(int stacks)
     {
-        player.GetComponent<PlayerShoot>().damage += Mathf.RoundToInt(player.GetComponent<PlayerStats>().damage * 0.5f);
-        player.GetComponent<PlayerShoot>().magazineSize -= 3;
+        PlayerStats.instance.damage += 4;
+        PlayerStats.instance.magazineSize -= 2;
     }
+}
+
+public class SpringReload : Item
+{
+    public override string GetName()
+    {
+        return "Spring-loaded Reload";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.reloadTime = PlayerStats.instance.reloadTime / 2;
+    }
+
+    public override void OnReload(int stacks)
+    {
+        Player.instance.GetComponent<PlayerMove>().Jump(1 + stacks / 4, true);
+    }
+}
+
+public class DemonicBlood : Item
+{
+    public override string GetName()
+    {
+        return "Demonic Blood";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.selfDamage += 1;
+        PlayerStats.instance.fireRate *= 2;
+        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 2f);
+    }
+}
+
+public class AllSeeingBullets : Item
+{
+    public override string GetName()
+    {
+        return "All-seeing Bullets";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.homingStrength += 0.1f;
+        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 0.9f);
+    }
+}
+
+public class SteelHeart : Item
+{
+    public override string GetName()
+    {
+        return "Steel Heart";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.moveSpeed *= 0.6f;
+        PlayerStats.instance.jumpForce *= 0.9f;
+        PlayerStats.instance.maxHealth *= 3;
+    }
+}
+
+public class AcrobaticMuscle : Item
+{
+    public override string GetName()
+    {
+        return "Acrobatic Muscle";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.moveSpeed *= 1.5f;
+        PlayerStats.instance.jumpForce *= 1.1f;
+        PlayerStats.instance.rollSpeed *= 0.2f;
+    }
+}
+
+public enum Items
+{
+    Loudener,
+    FleshBoots,
+    MutantBullets,
+    SpringReload,
+    DemonicBlood,
+    AllSeeingBullets,
+    SteelHeart,
+    AcrobaticMuscle
 }

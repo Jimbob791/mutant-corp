@@ -22,7 +22,7 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
-    public Item AssignItem(Items itemToAssign)
+    public static Item AssignItem(Items itemToAssign)
     {
         switch (itemToAssign)
         {
@@ -32,15 +32,18 @@ public class ItemPickup : MonoBehaviour
                 return new FleshBoots();
             case Items.MutantBullets:
                 return new MutantBullets();
+            case Items.SpringReload:
+                return new SpringReload();
+            case Items.DemonicBlood:
+                return new DemonicBlood();
+            case Items.SteelHeart:
+                return new SteelHeart();
+            case Items.AllSeeingBullets:
+                return new AllSeeingBullets();
+            case Items.AcrobaticMuscle:
+                return new AcrobaticMuscle();
             default:
                 return new Loudener();
         }
     }
-}
-
-public enum Items
-{
-    Loudener,
-    FleshBoots,
-    MutantBullets
 }

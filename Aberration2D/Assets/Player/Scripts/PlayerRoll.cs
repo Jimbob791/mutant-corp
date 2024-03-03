@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerRoll : MonoBehaviour
 {
     [Header("Movement Control")]
-    [SerializeField] float rollSpeed;
+    public float rollSpeed;
     [SerializeField] float rollTime;
 
     [HideInInspector] public bool rolling;

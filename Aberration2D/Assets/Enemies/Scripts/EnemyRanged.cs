@@ -7,6 +7,7 @@ public class EnemyRanged : MonoBehaviour
     [SerializeField] int damage;
     [SerializeField] GameObject projectile;
     [SerializeField] float shotCooldown;
+    [SerializeField] float shootDistance;
 
     bool canShoot = true;
     Animator anim;
@@ -20,7 +21,7 @@ public class EnemyRanged : MonoBehaviour
 
     void Update()
     {
-        if (canShoot)
+        if (canShoot && Vector3.Distance(transform.position, player.transform.position) < shootDistance)
         {
             anim.ResetTrigger("attack");
             canShoot = false;

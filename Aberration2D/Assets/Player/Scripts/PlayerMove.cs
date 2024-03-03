@@ -39,6 +39,7 @@ public class PlayerMove : MonoBehaviour
 
     float timeSinceGrounded;
     float timeSinceJump;
+    bool forcedJump = false;
 
     void Start()
     {
@@ -107,7 +108,7 @@ public class PlayerMove : MonoBehaviour
 
         desiredVelocity.y -= gravity;
 
-        if (grounded)
+        if (grounded && !forcedJump)
         {
             timeSinceGrounded = 0;
             jumping = false;
@@ -121,25 +122,34 @@ public class PlayerMove : MonoBehaviour
         {
             if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.W))
             {
-                desiredVelocity.y *= slowDown;
+                if (!forcedJump)
+                    desiredVelocity.y *= slowDown;
             }
         }
 
         if (grounded && timeSinceJump <= bufferTime)
         {
-            Jump();
+            Jump(1, false);
         }
         if (!grounded && rb.velocity.y < 0 && timeSinceGrounded <= coyoteTime && timeSinceJump <= bufferTime)
         {
-            Jump();
+            Jump(1, false);
         }
     }
 
-    private void Jump()
+    public void Jump(float force, bool forced)
     {
+        forcedJump = forced;
         timeSinceJump = 999;
         jumping = true;
-        desiredVelocity.y = jumpForce;
+        desiredVelocity.y = jumpForce * force;
+        StartCoroutine(ResetForced());
+    }
+
+    IEnumerator ResetForced()
+    {
+        yield return new WaitForSeconds(0.2f);
+        forcedJump = false;
     }
 
     private void SetVelocity()

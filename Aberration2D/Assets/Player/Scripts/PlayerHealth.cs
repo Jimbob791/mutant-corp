@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -8,6 +10,11 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 200;
     public int health;
     [SerializeField] float invincibilityTime;
+
+    [Header("Health Display")]
+    [SerializeField] HealthBar healthSlider;
+    [SerializeField] TextMeshProUGUI currentText;
+    [SerializeField] TextMeshProUGUI maxText;
 
     SpriteRenderer sr;
 
@@ -18,13 +25,25 @@ public class PlayerHealth : MonoBehaviour
     {
         health = maxHealth;
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        SetHealth();
     }
 
-    public void TakeDamage(int amount)
+    private void SetHealth()
     {
-        if (invincible || GetComponent<PlayerRoll>().rolling)
+        healthSlider.SetValues(maxHealth, health);
+
+        maxText.text = maxHealth.ToString();
+        currentText.text = health.ToString();
+    }
+
+    public void TakeDamage(int amount, bool ignoreImmunity)
+    {
+        if (!ignoreImmunity)
         {
-            return;
+            if (invincible || GetComponent<PlayerRoll>().rolling)
+            {
+                return;
+            }
         }
 
         health -= amount;
@@ -32,10 +51,13 @@ public class PlayerHealth : MonoBehaviour
         alive = health > 0;
         if (!alive)
         {
+            health = 0;
             Death();
         }
 
-        StartCoroutine(IFrames());
+        SetHealth();
+        if (!ignoreImmunity)
+            StartCoroutine(IFrames());
     }
 
     private IEnumerator IFrames()

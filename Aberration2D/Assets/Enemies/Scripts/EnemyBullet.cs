@@ -35,7 +35,7 @@ public class EnemyBullet : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            Player.instance.GetComponent<PlayerHealth>().TakeDamage(damage);
+            Player.instance.GetComponent<PlayerHealth>().TakeDamage(damage, false);
             Destroy(this.gameObject);
         }
     }

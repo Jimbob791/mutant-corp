@@ -14,6 +14,8 @@ public class PlayerShoot : MonoBehaviour
 
     [Header("Bullet Config")]
     public int damage;
+    public float homingStrength;
+    public int selfDamage;
     public float bulletSpeed;
     public float range;
     public GameObject bullet;
@@ -82,10 +84,15 @@ public class PlayerShoot : MonoBehaviour
 
             GameObject newBullet = Instantiate(bullet, muzzlePoint.position, Quaternion.identity);
             newBullet.transform.rotation = Quaternion.Euler(0f, 0f, bulletRotZ);
-            newBullet.GetComponent<Bullet>().desiredVelocity = shootDir * bulletSpeed;
+            newBullet.GetComponent<Bullet>().desiredVelocity = shootDir;
             newBullet.GetComponent<Bullet>().damage = damage;
+            newBullet.GetComponent<Bullet>().speed = bulletSpeed;
+            newBullet.GetComponent<Bullet>().homingStrength = homingStrength;
             Destroy(newBullet, range);
             StartCoroutine(ResetShoot());
+
+            if (selfDamage != 0)
+                GetComponent<PlayerHealth>().TakeDamage(selfDamage, true);
 
             if (Random.Range(-5, 5) <= 0) {
                 anim.SetTrigger("shoot1");
@@ -121,6 +128,7 @@ public class PlayerShoot : MonoBehaviour
 
     private IEnumerator Reload()
     {
+        GetComponent<PlayerItems>().Reload();
         yield return new WaitForSeconds(reloadTime);
         magazine = magazineSize;
         reloading = false;

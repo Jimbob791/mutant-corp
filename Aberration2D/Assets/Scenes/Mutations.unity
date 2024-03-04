@@ -972,9 +972,12 @@ MonoBehaviour:
   fireRate: 0.2
   recoil: 0
   magazineSize: 10
+  burstSize: 1
+  burstDelay: 1
   reloadTime: 1
   bloomAngle: 5
   maxHealth: 150
+  lifeSteal: 0
   damage: 10
   homingStrength: 0
   selfDamage: 0

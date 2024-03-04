@@ -16,8 +16,8 @@ public class HealthBar : MonoBehaviour
 
     void Start()
     {
-        slider = GetComponent<Slider>();
         pos = transform.localPosition;
+        slider = GetComponent<Slider>();
     }
 
     void Update()
@@ -27,8 +27,13 @@ public class HealthBar : MonoBehaviour
 
     public void SetValues(int max, int current)
     {
+        slider = GetComponent<Slider>();
         slider.maxValue = max;
         val = current;
+    }
+
+    public void ShakeBar()
+    {
         StartCoroutine(Shake());
     }
 

@@ -17,7 +17,6 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         Destroy(this.gameObject, 10f);
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     void Update()
@@ -27,8 +26,9 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
         closestEnemy = GetClosestEnemyTransform(enemies);
-        if (homingStrength != 0)
+        if (homingStrength != 0 && closestEnemy != null)
         {
             desiredVelocity = Vector3.Lerp(desiredVelocity, closestEnemy.transform.position - transform.position, homingStrength / 10);
             desiredVelocity.Normalize();
@@ -67,6 +67,7 @@ public class Bullet : MonoBehaviour
         if (col.gameObject.tag == "Enemy")
         {
             col.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
+            Player.instance.GetComponent<PlayerHealth>().TakeDamage(Player.instance.GetComponent<PlayerHealth>().lifeSteal * -1, true);
             Destroy(this.gameObject);
         }
     }

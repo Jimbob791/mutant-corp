@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("Health Config")]
     public int maxHealth = 200;
     public int health;
+    public int lifeSteal;
     [SerializeField] float invincibilityTime;
 
     [Header("Health Display")]
@@ -28,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
         SetHealth();
     }
 
-    private void SetHealth()
+    public void SetHealth()
     {
         healthSlider.SetValues(maxHealth, health);
 
@@ -57,7 +58,10 @@ public class PlayerHealth : MonoBehaviour
 
         SetHealth();
         if (!ignoreImmunity)
+        {
+            healthSlider.ShakeBar();
             StartCoroutine(IFrames());
+        }
     }
 
     private IEnumerator IFrames()

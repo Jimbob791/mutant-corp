@@ -28,6 +28,8 @@ public abstract class Item
     }
 }
 
+// -------------------------------------------------------------- Items --------------------------------------------------------------
+
 public class Loudener : Item
 {
     public override string GetName()
@@ -69,6 +71,65 @@ public class MutantBullets : Item
         PlayerStats.instance.magazineSize -= 2;
     }
 }
+
+public class BurstSwitch : Item
+{
+    public override string GetName()
+    {
+        return "Burst Switch";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.magazineSize += 2;
+        PlayerStats.instance.burstSize += 2;
+        PlayerStats.instance.fireRate += 0.6f;
+        PlayerStats.instance.burstDelay = (PlayerStats.instance.fireRate / 2) / PlayerStats.instance.burstSize;
+    }
+}
+
+public class AmmoCache : Item
+{
+    public override string GetName()
+    {
+        return "Ammo Cache";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.magazineSize += 10;
+        PlayerStats.instance.reloadTime += 1.5f;
+    }
+}
+
+public class SaltedOrgans : Item
+{
+    public override string GetName()
+    {
+        return "Salted Organs";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.maxHealth += 50;
+        Player.instance.GetComponent<PlayerHealth>().TakeDamage(-50, true);
+    }
+}
+
+public class NosferatuBlood : Item
+{
+    public override string GetName()
+    {
+        return "Nosferatu Blood";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.lifeSteal += 1;
+    }
+}
+
+// -------------------------------------------------------------- Mutations --------------------------------------------------------------
 
 public class SpringReload : Item
 {
@@ -156,5 +217,9 @@ public enum Items
     DemonicBlood,
     AllSeeingBullets,
     SteelHeart,
-    AcrobaticMuscle
+    AcrobaticMuscle,
+    AmmoCache,
+    BurstSwitch,
+    SaltedOrgans,
+    NosferatuBlood
 }

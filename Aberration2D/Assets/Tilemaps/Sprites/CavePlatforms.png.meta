@@ -113,6 +113,30 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -121,7 +145,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 56
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -142,7 +166,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 56
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -163,7 +187,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 56
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -184,7 +208,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 56
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -205,7 +229,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -226,7 +250,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 48
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -247,7 +271,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 48
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -268,7 +292,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 48
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -289,7 +313,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 40
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -310,7 +334,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 40
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -331,7 +355,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 40
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -352,7 +376,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 40
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -373,7 +397,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 40
         width: 8
         height: 8
       alignment: 0
@@ -394,7 +418,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 32
+        y: 40
         width: 8
         height: 8
       alignment: 0
@@ -415,7 +439,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 32
+        y: 40
         width: 8
         height: 8
       alignment: 0
@@ -436,7 +460,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 32
+        y: 40
         width: 8
         height: 8
       alignment: 0
@@ -457,7 +481,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 24
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -478,7 +502,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 24
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -499,7 +523,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 24
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -520,7 +544,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -541,7 +565,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 16
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -562,7 +586,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 16
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -583,7 +607,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -604,7 +628,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -625,7 +649,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -646,7 +670,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -667,7 +691,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -688,7 +712,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 0
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -709,7 +733,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 0
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -730,7 +754,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 0
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -751,7 +775,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 0
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -772,7 +796,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 40
-        y: 0
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -793,7 +817,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 0
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -814,7 +838,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 56
-        y: 0
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -826,6 +850,111 @@ TextureImporter:
       bones: []
       spriteID: a7e28332363e4be4fa0dc052196451c5
       internalID: 1278528705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CavePlatforms_34
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 344fbc5c9834dcf41a4d75d26cc74bd2
+      internalID: 424189837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CavePlatforms_35
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 824ed1a7606839d489cf9192adfee62b
+      internalID: -499595380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CavePlatforms_36
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31c9f3d4f5785df41bb25c2e565f3948
+      internalID: 1968866432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CavePlatforms_37
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b0afc3d63363074d8d5eef1ec3faef5
+      internalID: 39910164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CavePlatforms_38
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d2937cdf71f1e3479cb29fd0922bc03
+      internalID: 1870892236
       vertices: []
       indices: 
       edges: []
@@ -852,6 +981,7 @@ TextureImporter:
       CavePlatforms_10: 1492441342
       CavePlatforms_21: -2087278792
       CavePlatforms_0: -865262303
+      CavePlatforms_35: -499595380
       CavePlatforms_23: -150156825
       CavePlatforms_20: -1909684683
       CavePlatforms_25: 1696675665
@@ -862,7 +992,10 @@ TextureImporter:
       CavePlatforms_22: 1975501453
       CavePlatforms_26: -1337795291
       CavePlatforms_30: -1874896804
+      CavePlatforms_34: 424189837
       CavePlatforms_33: 1278528705
+      CavePlatforms_36: 1968866432
+      CavePlatforms_38: 1870892236
       CavePlatforms_27: 928079382
       CavePlatforms_12: 564218217
       CavePlatforms_24: 1214445463
@@ -872,6 +1005,7 @@ TextureImporter:
       CavePlatforms_7: -895389573
       CavePlatforms_4: -2058815372
       CavePlatforms_1: 838241050
+      CavePlatforms_37: 39910164
       CavePlatforms_11: 1790401383
       CavePlatforms_15: -1956480917
       CavePlatforms_29: 1239087114

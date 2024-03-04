@@ -8,6 +8,8 @@ public class PlayerShoot : MonoBehaviour
     public float fireRate;
     public float recoil;
     public int magazineSize;
+    public int burstSize;
+    public float burstDelay;
     public float reloadTime;
     public float bloomAngle;
     [SerializeField] Transform muzzlePoint;
@@ -75,12 +77,57 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && canShoot && !reloading && !pr.rolling)
         {
-            canShoot = false;
+            if (burstSize == 1)
+            {
+                canShoot = false;
 
+                anim.ResetTrigger("shoot1");
+                anim.ResetTrigger("shoot2");
+
+                Vector3 shootDir = CalculateAngle();
+
+                GameObject newBullet = Instantiate(bullet, muzzlePoint.position, Quaternion.identity);
+                newBullet.transform.rotation = Quaternion.Euler(0f, 0f, bulletRotZ);
+                newBullet.GetComponent<Bullet>().desiredVelocity = shootDir;
+                newBullet.GetComponent<Bullet>().damage = damage;
+                newBullet.GetComponent<Bullet>().speed = bulletSpeed;
+                newBullet.GetComponent<Bullet>().homingStrength = homingStrength;
+                Destroy(newBullet, range);
+                StartCoroutine(ResetShoot());
+
+                if (selfDamage != 0)
+                    GetComponent<PlayerHealth>().TakeDamage(selfDamage, true);
+
+                if (Random.Range(-5, 5) <= 0) {
+                    anim.SetTrigger("shoot1");
+                }
+                else {
+                    anim.SetTrigger("shoot2");
+                }
+
+                magazine--;
+                if (magazine == 0)
+                {
+                    reloading = true;
+                    StartCoroutine(Reload());
+                }
+            }
+            else
+            {
+                canShoot = false;
+                StartCoroutine(Burst(burstSize, burstDelay));
+            }
+        }
+    }
+
+    IEnumerator Burst(int num, float delay)
+    {
+        Vector3 shootDir = CalculateAngle();
+
+        for (int i = 0; i < num; i++)
+        {
             anim.ResetTrigger("shoot1");
             anim.ResetTrigger("shoot2");
-
-            Vector3 shootDir = CalculateAngle();
 
             GameObject newBullet = Instantiate(bullet, muzzlePoint.position, Quaternion.identity);
             newBullet.transform.rotation = Quaternion.Euler(0f, 0f, bulletRotZ);
@@ -89,7 +136,6 @@ public class PlayerShoot : MonoBehaviour
             newBullet.GetComponent<Bullet>().speed = bulletSpeed;
             newBullet.GetComponent<Bullet>().homingStrength = homingStrength;
             Destroy(newBullet, range);
-            StartCoroutine(ResetShoot());
 
             if (selfDamage != 0)
                 GetComponent<PlayerHealth>().TakeDamage(selfDamage, true);
@@ -106,8 +152,14 @@ public class PlayerShoot : MonoBehaviour
             {
                 reloading = true;
                 StartCoroutine(Reload());
+                StartCoroutine(ResetShoot());
+                yield break;
             }
+
+            yield return new WaitForSeconds(delay);
         }
+
+        StartCoroutine(ResetShoot());
     }
 
     private Vector3 CalculateAngle()

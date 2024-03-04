@@ -16,11 +16,14 @@ public class PlayerStats : MonoBehaviour
     public float fireRate;
     public float recoil;
     public int magazineSize;
+    public int burstSize;
+    public float burstDelay;
     public float reloadTime;
     public float bloomAngle;
 
     [Header("Health Config")]
     public int maxHealth;
+    public int lifeSteal;
 
     [Header("Bullet Config")]
     public int damage;
@@ -59,10 +62,14 @@ public class PlayerStats : MonoBehaviour
         playerShoot.fireRate = fireRate;
         playerShoot.recoil = recoil;
         playerShoot.magazineSize = magazineSize;
+        playerShoot.burstSize = burstSize;
+        playerShoot.burstDelay = burstDelay;
         playerShoot.reloadTime = reloadTime;
         playerShoot.bloomAngle = bloomAngle;
 
         playerhealth.maxHealth = maxHealth;
+        playerhealth.lifeSteal = lifeSteal;
+        playerhealth.SetHealth();
 
         playerShoot.damage = damage;
         playerShoot.homingStrength = homingStrength;

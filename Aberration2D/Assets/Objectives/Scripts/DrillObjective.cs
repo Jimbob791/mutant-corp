@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DrillObjective : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI objective;
     [SerializeField] LayerMask playerLayer;
     [SerializeField] Slider slider;
     [SerializeField] float timeToActivate;
@@ -17,6 +19,7 @@ public class DrillObjective : MonoBehaviour
 
     void Start()
     {
+        objective.text = "Locate Broken Drill";
         dust.Stop();
         pos = transform.position;
     }
@@ -25,6 +28,11 @@ public class DrillObjective : MonoBehaviour
     {
         if (complete)
         {
+            objective.text = "Enter Drill to Proceed";
+            if (Input.GetKeyDown(KeyCode.E) && Physics2D.BoxCast(transform.position, new Vector2(1.5f, 1.5f), 0, Vector2.zero, 0, playerLayer))
+            {
+                GameManager.instance.LoadMutations();
+            }
             return;
         }
 
@@ -43,6 +51,7 @@ public class DrillObjective : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.E) && Physics2D.BoxCast(transform.position, new Vector2(1.5f, 1.5f), 0, Vector2.zero, 0, playerLayer))
         {
+            objective.text = "Drilling - Stay Alive";
             active = true;
             dust.Play();
             GetComponent<Animator>().enabled = true;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class PlayerShoot : MonoBehaviour
 
     [Header("References")]
     [SerializeField] GameObject gun;
+    [SerializeField] GameObject reloadBar;
+    [SerializeField] GameObject reloadProgress;
 
     PlayerAnimation pa;
     PlayerRoll pr;
@@ -122,12 +125,13 @@ public class PlayerShoot : MonoBehaviour
 
     IEnumerator Burst(int num, float delay)
     {
-        Vector3 shootDir = CalculateAngle();
 
         for (int i = 0; i < num; i++)
         {
             anim.ResetTrigger("shoot1");
             anim.ResetTrigger("shoot2");
+
+            Vector3 shootDir = CalculateAngle();
 
             GameObject newBullet = Instantiate(bullet, muzzlePoint.position, Quaternion.identity);
             newBullet.transform.rotation = Quaternion.Euler(0f, 0f, bulletRotZ);
@@ -180,9 +184,28 @@ public class PlayerShoot : MonoBehaviour
 
     private IEnumerator Reload()
     {
+        reloadBar.GetComponent<Image>().enabled = true;
+        reloadProgress.GetComponent<Image>().enabled = true;
         GetComponent<PlayerItems>().Reload();
+        StartCoroutine(ResetReload());
+        float duration = 0;
+
+        while (duration < reloadTime)
+        {
+            duration += Time.deltaTime;
+
+            reloadProgress.transform.localPosition = new Vector3(-40.5f + (duration / reloadTime) * 81, 0, 0);
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator ResetReload()
+    {
         yield return new WaitForSeconds(reloadTime);
         magazine = magazineSize;
         reloading = false;
+        reloadBar.GetComponent<Image>().enabled = false;
+        reloadProgress.GetComponent<Image>().enabled = false;
     }
 }

@@ -97,8 +97,8 @@ public class AmmoCache : Item
 
     public override void OnPickup(int stacks)
     {
-        PlayerStats.instance.magazineSize += 10;
-        PlayerStats.instance.reloadTime += 1.5f;
+        PlayerStats.instance.magazineSize += 5;
+        PlayerStats.instance.reloadTime += 1f;
     }
 }
 
@@ -126,6 +126,19 @@ public class NosferatuBlood : Item
     public override void OnPickup(int stacks)
     {
         PlayerStats.instance.lifeSteal += 1;
+    }
+}
+
+public class AutoTrigger : Item
+{
+    public override string GetName()
+    {
+        return "Auto Trigger";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.fireRate -= 0.01f;
     }
 }
 
@@ -204,7 +217,23 @@ public class AcrobaticMuscle : Item
     {
         PlayerStats.instance.moveSpeed *= 1.5f;
         PlayerStats.instance.jumpForce *= 1.1f;
-        PlayerStats.instance.rollSpeed *= 0.2f;
+        PlayerStats.instance.rollSpeed *= 0.4f;
+    }
+}
+
+public class BionicFinger : Item
+{
+    public override string GetName()
+    {
+        return "Bionic Finger";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.fireRate *= 0.5f;
+        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 0.3f);
+        PlayerStats.instance.magazineSize += 10;
+        PlayerStats.instance.reloadTime += 1;
     }
 }
 
@@ -221,5 +250,7 @@ public enum Items
     AmmoCache,
     BurstSwitch,
     SaltedOrgans,
-    NosferatuBlood
+    NosferatuBlood,
+    BionicFinger,
+    AutoTrigger
 }

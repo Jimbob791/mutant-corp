@@ -14,16 +14,26 @@ public class MutationManager : MonoBehaviour
     [SerializeField] GameObject choiceParent;
     [SerializeField] int numChoices = 3;
 
-    [SerializeField] List<MutationObject> mutations = new List<MutationObject>();
+    List<ItemObject> items = new List<ItemObject>();
+    List<ItemObject> mutations = new List<ItemObject>();
 
     List<GameObject> options = new List<GameObject>();
-    List<MutationObject> chosenMutations = new List<MutationObject>();
+    List<ItemObject> chosenMutations = new List<ItemObject>();
 
     int selected = 0;
     bool confirmed = true;
 
     void Start()
     {
+        items = AllItems.instance.items;
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].itemRarity == "Mutation")
+            {
+                mutations.Add(items[i]);
+            }
+        }
+
         StartCoroutine(TitleIntro());
         StartCoroutine(ChooseMutationOptions());
     }
@@ -53,16 +63,16 @@ public class MutationManager : MonoBehaviour
     {
         for (int i = 0; i < numChoices; i++)
         {
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(0.4f);
 
-            MutationObject chosen = mutations[Random.Range(0, mutations.Count)];
+            ItemObject chosen = mutations[Random.Range(0, mutations.Count)];
             chosenMutations.Add(chosen);
             mutations.Remove(chosen);
 
             GameObject newChoice = Instantiate(prefab, choiceParent.transform);
             newChoice.transform.localPosition = new Vector3(0, i * -210, 0);
-            newChoice.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = chosen.mutationName;
-            newChoice.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = chosen.description;
+            newChoice.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = chosen.itemName;
+            newChoice.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = chosen.itemDescription;
             //newChoice.transform.GetChild(3).gameObject.GetComponent<Image>().sprite = chosen.icon;
             options.Add(newChoice);
         }
@@ -122,7 +132,7 @@ public class MutationManager : MonoBehaviour
         StartCoroutine(TitleFlicker());
     }
 
-    private void AddMutation(MutationObject mutation)
+    private void AddMutation(ItemObject mutation)
     {
         Item item = ItemPickup.AssignItem(mutation.item);
 

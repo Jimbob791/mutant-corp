@@ -4,17 +4,33 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
+    [Header("Item Info")]
     public Item item;
-    public Items itemDrop;
+    public ItemObject itemDrop;
     [SerializeField] LayerMask playerLayer;
+
+    [Space]
+
+    [Header("Outlines")]
+    [SerializeField] Material commonOutline;
+    [SerializeField] Material specialOutline;
+    [SerializeField] Material exoticOutline;
+    [SerializeField] Material fabledOutline;
+    [SerializeField] Material selectedOutline;
+
+    Material rarityMaterial;
 
     Vector3 startPos;
     float tick = 0;
 
     void Start()
     {
+        rarityMaterial = SetMaterial(itemDrop.itemRarity);
+        GetComponent<SpriteRenderer>().material = rarityMaterial;
+        GetComponent<SpriteRenderer>().sprite = itemDrop.icon;
+
         tick = Random.Range(0, 1.5f);
-        item = AssignItem(itemDrop);
+        item = AssignItem(itemDrop.item);
         startPos = transform.position;
     }
 
@@ -25,7 +41,26 @@ public class ItemPickup : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && Physics2D.BoxCast(transform.position, new Vector2(2, 2), 0, Vector2.zero, 0, playerLayer))
         {
             Player.instance.GetComponent<PlayerItems>().AddItem(item);
+            ItemInfoDisplay.instance.ItemPickedUp(itemDrop);
+            GameObject.Find("Inventory").GetComponent<InventoryDisplay>().CreateInventoryItems(Player.instance.GetComponent<PlayerItems>().items);
             Destroy(this.gameObject);
+        }
+    }
+
+    private Material SetMaterial(string rarity)
+    {
+        switch (rarity)
+        {
+            case "Common":
+                return commonOutline;
+            case "Special":
+                return specialOutline;
+            case "Exotic":
+                return exoticOutline;
+            case "Fabled":
+                return fabledOutline;
+            default:
+                return commonOutline;
         }
     }
 
@@ -57,6 +92,10 @@ public class ItemPickup : MonoBehaviour
                 return new AllSeeingBullets();
             case Items.AcrobaticMuscle:
                 return new AcrobaticMuscle();
+            case Items.BionicFinger:
+                return new BionicFinger();
+            case Items.AutoTrigger:
+                return new AutoTrigger();
             default:
                 return new Loudener();
         }

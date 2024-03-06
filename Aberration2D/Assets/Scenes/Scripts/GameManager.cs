@@ -30,17 +30,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (SceneManager.GetActiveScene().name != "Mutations")
-        {
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                LoadMutations();
-            }
-        }
-    }
-
     public void LoadMutations()
     {
         ItemStorage.instance.SaveItems(Player.instance.GetComponent<PlayerItems>().items);

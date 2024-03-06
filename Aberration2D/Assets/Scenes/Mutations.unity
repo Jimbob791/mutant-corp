@@ -441,6 +441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 629107033}
   - component: {fileID: 629107032}
+  - component: {fileID: 629107034}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -475,6 +476,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &629107034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629107031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b069023ecdedc2b47b268e057fa093ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 11400000, guid: 3b7c499173398fd4f93154b6d04f3d55, type: 2}
+  - {fileID: 11400000, guid: 893d0da6334bc2c468ed9ea60f63211f, type: 2}
+  - {fileID: 11400000, guid: d447ac865b22d754eb2e4e26840b5a62, type: 2}
+  - {fileID: 11400000, guid: bb4d38499db69d54ea2a890af9f6c1f1, type: 2}
+  - {fileID: 11400000, guid: cfa961c92ad4243498544cc7947ca423, type: 2}
+  - {fileID: 11400000, guid: f5a3444dddcd78243b277324a94d232a, type: 2}
+  - {fileID: 11400000, guid: a5f318d88b3d3f142959ebc612ddb5e9, type: 2}
+  - {fileID: 11400000, guid: ce39a584497710440aa3bb2c69001205, type: 2}
+  - {fileID: 11400000, guid: da786c9c912813741af2010bec22053e, type: 2}
+  - {fileID: 11400000, guid: 691521aab580bec4e9b64e173724227f, type: 2}
+  - {fileID: 11400000, guid: ec57ca8cebe99ad48923572ea043187e, type: 2}
+  - {fileID: 11400000, guid: 7ea717119caf6104397edd0b116bb2a2, type: 2}
+  - {fileID: 11400000, guid: 22e1e25f022e7b341bb3f052da0b05f6, type: 2}
+  - {fileID: 11400000, guid: 3730d8fda3f9ca942a51ecd57d2e3ade, type: 2}
 --- !u!1 &644637766
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,7 +655,7 @@ Canvas:
   m_GameObject: {fileID: 691424469}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -969,7 +997,7 @@ MonoBehaviour:
   moveSpeed: 4
   jumpForce: 14
   rollSpeed: 5
-  fireRate: 0.2
+  fireRate: 0.4
   recoil: 0
   magazineSize: 10
   burstSize: 1
@@ -1649,12 +1677,6 @@ MonoBehaviour:
   prefab: {fileID: 1324150358997161475, guid: f86806458cea5a24997b63320365fb53, type: 3}
   choiceParent: {fileID: 1879763685}
   numChoices: 3
-  mutations:
-  - {fileID: 11400000, guid: 4c4cf4f14f33e41478ad8c09f2dde034, type: 2}
-  - {fileID: 11400000, guid: c87e6e30c8760b34cbc0a99d0fca8849, type: 2}
-  - {fileID: 11400000, guid: 75be9d9effc25fc45ba3d2fe9d954bb0, type: 2}
-  - {fileID: 11400000, guid: 8d2acf68ec5204d488c3bdb03c9a3aaa, type: 2}
-  - {fileID: 11400000, guid: 8fc44076cc2feb54ea1e68167286f46b, type: 2}
 --- !u!4 &2059111866
 Transform:
   m_ObjectHideFlags: 0

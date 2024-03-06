@@ -54,6 +54,29 @@ public class PlayerStats : MonoBehaviour
         PlayerHealth playerhealth = player.GetComponent<PlayerHealth>();
         PlayerRoll playerRoll = player.GetComponent<PlayerRoll>();
 
+        if (moveSpeed < 0)
+            moveSpeed = 0;
+        if (jumpForce < 0)
+            jumpForce = 0;
+        if (fireRate < 0)
+            fireRate = 0;
+        if (magazineSize < 1)
+            magazineSize = 1;
+        if (reloadTime < 0)
+            reloadTime = 0;
+        if (maxHealth < 1)
+            maxHealth = 1;
+        if (lifeSteal < 0)
+            lifeSteal = 0;
+        if (damage < 1)
+            damage = 1;
+        if (selfDamage < 0)
+            selfDamage = 0;
+        if (bulletSpeed < 1)
+            bulletSpeed = 1;
+        if (range < 0)
+            range = 0;
+
         playerMove.moveSpeed = moveSpeed;
         playerMove.jumpForce = jumpForce;
 

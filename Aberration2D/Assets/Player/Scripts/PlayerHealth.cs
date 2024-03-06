@@ -56,6 +56,11 @@ public class PlayerHealth : MonoBehaviour
             Death();
         }
 
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+
         SetHealth();
         if (!ignoreImmunity)
         {

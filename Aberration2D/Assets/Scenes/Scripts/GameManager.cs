@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     public void ExitMutations()
     {
-        StartCoroutine(Load("TestScene"));
+        StartCoroutine(Load("CaveScene_1"));
     }
 
     IEnumerator Load(string sceneName)

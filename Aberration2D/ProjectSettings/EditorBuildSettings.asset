@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mutations.unity
     guid: 5f818f8a73f22074ca35a050199d9613
+  - enabled: 1
+    path: Assets/Scenes/CaveScenes/CaveScene_1.unity
+    guid: 4ab54c0dd5fb7ba4a84241ee4b5c5d58
   m_configObjects: {}

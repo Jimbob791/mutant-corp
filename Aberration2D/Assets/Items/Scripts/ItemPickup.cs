@@ -26,8 +26,8 @@ public class ItemPickup : MonoBehaviour
     void Start()
     {
         rarityMaterial = SetMaterial(itemDrop.itemRarity);
-        GetComponent<SpriteRenderer>().material = rarityMaterial;
-        GetComponent<SpriteRenderer>().sprite = itemDrop.icon;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().material = rarityMaterial;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = itemDrop.icon;
 
         tick = Random.Range(0, 1.5f);
         item = AssignItem(itemDrop.item);
@@ -37,7 +37,7 @@ public class ItemPickup : MonoBehaviour
     void Update()
     {
         tick += Time.deltaTime;
-        transform.localPosition = new Vector3(startPos.x, startPos.y + (Mathf.Sin(tick) * 0.2f), 0);
+        transform.localPosition = new Vector3(startPos.x, startPos.y + (Mathf.Sin(tick) * 0.1f), 0);
         if (Input.GetKeyDown(KeyCode.E) && Physics2D.BoxCast(transform.position, new Vector2(2, 2), 0, Vector2.zero, 0, playerLayer))
         {
             Player.instance.GetComponent<PlayerItems>().AddItem(item);

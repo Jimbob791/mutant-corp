@@ -74,7 +74,7 @@ public class InventoryDisplay : MonoBehaviour
             GameObject spawned;
             spawned = Instantiate(invPrefab, transform.position, Quaternion.identity, backingParent.transform);
 
-            spawned.GetComponent<Image>().sprite = invList[i].obj.icon;
+            spawned.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = invList[i].obj.icon;
             //spawned.GetComponent<Image>().material = SetMaterial(invList[i].obj.itemRarity);
             for (int t = 0; t < 5; t++)
             {

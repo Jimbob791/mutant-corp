@@ -20,11 +20,16 @@ public class PickupSpawner : MonoBehaviour
 
     void Start()
     {
+        foreach (Transform child in transform)
+        {
+            spawnPosList.Add(child);
+        }
+
         chosenInteractable = interactables[0];
         itemList = AllItems.instance.items;
         SortItems();
 
-        credits = Random.Range(50, 100);
+        credits = Random.Range(100, 300);
 
         int sumWeights = 0;
         for (int i = 0; i < interactables.Count; i++)
@@ -72,7 +77,7 @@ public class PickupSpawner : MonoBehaviour
         {
             return exotics[Random.Range(0, exotics.Count)];
         }
-        return exotics[Random.Range(0, exotics.Count)]; //return fabled[Random.Range(0, fabled.Count)];
+        return fabled[Random.Range(0, fabled.Count)];
     }
 
     private void SortItems()

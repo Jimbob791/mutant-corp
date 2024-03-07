@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f07a6d3486e78d943bc84eead3f8032a, type: 3}
-  m_Name: BionicFIngerObject
+  m_Name: BionicFingerObject
   m_EditorClassIdentifier: 
   item: 12
-  icon: {fileID: 21300000, guid: e591e53f8e9ad734fac142ed77d37f93, type: 3}
+  icon: {fileID: 21300000, guid: 2769bb08cb6daa643b18e14a6e1cf16d, type: 3}
   itemName: Bionic Finger
   itemRarity: Mutation
   itemDescription: Replaces puny human fingers with rapid firing capabilities. +100%

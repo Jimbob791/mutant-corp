@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SteelHeartObject
   m_EditorClassIdentifier: 
   item: 6
-  icon: {fileID: 21300000, guid: e591e53f8e9ad734fac142ed77d37f93, type: 3}
+  icon: {fileID: 21300000, guid: 7dec296e29bd8f54d9f2546d949505f6, type: 3}
   itemName: Steel Heart
   itemRarity: Mutation
   itemDescription: Titanium heart implants greatly improve blood flow. +200% max

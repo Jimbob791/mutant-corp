@@ -30,4 +30,12 @@ public class PlayerItems : MonoBehaviour
             items[i].item.OnReload(items[i].stacks);
         }
     }
+
+    public void Shoot()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            items[i].item.OnShoot(items[i].stacks);
+        }
+    }
 }

@@ -497,9 +497,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f5a3444dddcd78243b277324a94d232a, type: 2}
   - {fileID: 11400000, guid: a5f318d88b3d3f142959ebc612ddb5e9, type: 2}
   - {fileID: 11400000, guid: ce39a584497710440aa3bb2c69001205, type: 2}
+  - {fileID: 11400000, guid: fc811b18cd6044a408ff8a15290c45aa, type: 2}
   - {fileID: 11400000, guid: da786c9c912813741af2010bec22053e, type: 2}
   - {fileID: 11400000, guid: 691521aab580bec4e9b64e173724227f, type: 2}
   - {fileID: 11400000, guid: ec57ca8cebe99ad48923572ea043187e, type: 2}
+  - {fileID: 11400000, guid: 7ca94f575829085479769d7fd3781375, type: 2}
   - {fileID: 11400000, guid: 7ea717119caf6104397edd0b116bb2a2, type: 2}
   - {fileID: 11400000, guid: 22e1e25f022e7b341bb3f052da0b05f6, type: 2}
   - {fileID: 11400000, guid: 3730d8fda3f9ca942a51ecd57d2e3ade, type: 2}
@@ -995,6 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4
+  numJumps: 1
   jumpForce: 14
   rollSpeed: 5
   fireRate: 0.4

@@ -12,7 +12,7 @@ public abstract class Item
 
     }
 
-    public virtual void OnShoot(GameObject player, int stacks)
+    public virtual void OnShoot(int stacks)
     {
 
     }
@@ -142,6 +142,35 @@ public class AutoTrigger : Item
     }
 }
 
+public class RocketBoots : Item
+{
+    public override string GetName()
+    {
+        return "Rocket Boots";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.numJumps += 1;
+    }
+}
+
+public class GrenadeLauncher : Item
+{
+    public override string GetName()
+    {
+        return "Grenade Launcher";
+    }
+
+    public override void OnShoot(int stacks)
+    {
+        if (Random.Range(0f, 100f) < stacks * 10f)
+        {
+            Player.instance.GetComponent<PlayerShoot>().ShootGrenade();
+        }
+    }
+}
+
 // -------------------------------------------------------------- Mutations --------------------------------------------------------------
 
 public class SpringReload : Item
@@ -252,5 +281,7 @@ public enum Items
     SaltedOrgans,
     NosferatuBlood,
     BionicFinger,
-    AutoTrigger
+    AutoTrigger,
+    RocketBoots,
+    GrenadeLauncher
 }

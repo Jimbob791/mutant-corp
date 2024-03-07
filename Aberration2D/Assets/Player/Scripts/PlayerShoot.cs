@@ -22,6 +22,7 @@ public class PlayerShoot : MonoBehaviour
     public float bulletSpeed;
     public float range;
     public GameObject bullet;
+    public GameObject grenade;
 
     [Header("References")]
     [SerializeField] GameObject gun;
@@ -80,6 +81,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && canShoot && !reloading && !pr.rolling)
         {
+            GetComponent<PlayerItems>().Shoot();
             if (burstSize == 1)
             {
                 canShoot = false;
@@ -207,5 +209,18 @@ public class PlayerShoot : MonoBehaviour
         reloading = false;
         reloadBar.GetComponent<Image>().enabled = false;
         reloadProgress.GetComponent<Image>().enabled = false;
+    }
+
+    public void ShootGrenade()
+    {
+        Vector3 shootDir = CalculateAngle();
+
+        GameObject newBullet = Instantiate(grenade, muzzlePoint.position, Quaternion.identity);
+        newBullet.transform.rotation = Quaternion.Euler(0f, 0f, bulletRotZ);
+        newBullet.GetComponent<Bullet>().desiredVelocity = shootDir;
+        newBullet.GetComponent<Bullet>().damage = damage * 5;
+        newBullet.GetComponent<Bullet>().speed = bulletSpeed / 1.5f;
+        newBullet.GetComponent<Bullet>().homingStrength = 0;
+        Destroy(newBullet, 60f);
     }
 }

@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     public int damage;
     public float speed;
     public float homingStrength;
+    [SerializeField] float gravity;
 
     GameObject[] enemies;
     Rigidbody2D rb;
@@ -21,6 +22,8 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
+        float rotZ = Mathf.Atan2(desiredVelocity.y, desiredVelocity.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rotZ);
         rb.velocity = desiredVelocity * speed;
     }
 
@@ -31,9 +34,10 @@ public class Bullet : MonoBehaviour
         if (homingStrength != 0 && closestEnemy != null)
         {
             desiredVelocity = Vector3.Lerp(desiredVelocity, closestEnemy.transform.position - transform.position, homingStrength / 10);
-            desiredVelocity.Normalize();
-            float rotZ = Mathf.Atan2(desiredVelocity.y, desiredVelocity.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, rotZ);
+        }
+        else
+        {
+            desiredVelocity.y -= gravity;
         }
     }
 
@@ -58,7 +62,15 @@ public class Bullet : MonoBehaviour
     {
         if (col.gameObject.tag == "Platforms")
         {
-            Destroy(this.gameObject);
+            if (GetComponent<Grenade>() != null)
+            {
+                GetComponent<Grenade>().damage = damage;
+                GetComponent<Grenade>().Explode();
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 
@@ -66,9 +78,17 @@ public class Bullet : MonoBehaviour
     {
         if (col.gameObject.tag == "Enemy")
         {
-            col.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
-            Player.instance.GetComponent<PlayerHealth>().TakeDamage(Player.instance.GetComponent<PlayerHealth>().lifeSteal * -1, true);
-            Destroy(this.gameObject);
+            if (GetComponent<Grenade>() != null)
+            {
+                GetComponent<Grenade>().damage = damage;
+                GetComponent<Grenade>().Explode();
+            }
+            else
+            {
+                col.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
+                Player.instance.GetComponent<PlayerHealth>().TakeDamage(Player.instance.GetComponent<PlayerHealth>().lifeSteal * -1, true);
+                Destroy(this.gameObject);
+            }
         }
     }
 }

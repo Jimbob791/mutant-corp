@@ -9,6 +9,7 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Movement Control")]
     public float moveSpeed;
+    public int numJumps;
     public float jumpForce;
     public float rollSpeed;
 
@@ -79,6 +80,7 @@ public class PlayerStats : MonoBehaviour
 
         playerMove.moveSpeed = moveSpeed;
         playerMove.jumpForce = jumpForce;
+        playerMove.numJumps = numJumps;
 
         playerRoll.rollSpeed = rollSpeed;
 

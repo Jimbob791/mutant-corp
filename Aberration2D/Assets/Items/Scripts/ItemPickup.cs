@@ -96,6 +96,10 @@ public class ItemPickup : MonoBehaviour
                 return new BionicFinger();
             case Items.AutoTrigger:
                 return new AutoTrigger();
+            case Items.RocketBoots:
+                return new RocketBoots();
+            case Items.GrenadeLauncher:
+                return new GrenadeLauncher();
             default:
                 return new Loudener();
         }

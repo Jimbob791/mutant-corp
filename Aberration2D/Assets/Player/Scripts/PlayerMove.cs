@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float groundAccel;
     [SerializeField] float airAccel;
     public float jumpForce;
+    public int numJumps;
     [SerializeField] float slowDown;
     [SerializeField] float gravity;
 
@@ -40,6 +41,7 @@ public class PlayerMove : MonoBehaviour
     float timeSinceGrounded;
     float timeSinceJump;
     bool forcedJump = false;
+    int usedJumps = 0;
 
     void Start()
     {
@@ -112,6 +114,7 @@ public class PlayerMove : MonoBehaviour
         {
             timeSinceGrounded = 0;
             jumping = false;
+            usedJumps = 0;
             desiredVelocity.y = 0;
         }
     }
@@ -131,7 +134,11 @@ public class PlayerMove : MonoBehaviour
         {
             Jump(1, false);
         }
-        if (!grounded && rb.velocity.y < 0 && timeSinceGrounded <= coyoteTime && timeSinceJump <= bufferTime)
+        else if (!grounded && rb.velocity.y < 0 && timeSinceGrounded <= coyoteTime && timeSinceJump <= bufferTime)
+        {
+            Jump(1, false);
+        }
+        else if (!grounded && usedJumps < numJumps && timeSinceJump <= bufferTime)
         {
             Jump(1, false);
         }
@@ -143,6 +150,7 @@ public class PlayerMove : MonoBehaviour
         timeSinceJump = 999;
         jumping = true;
         desiredVelocity.y = jumpForce * force;
+        usedJumps = forced ? usedJumps : usedJumps + 1;
         StartCoroutine(ResetForced());
     }
 

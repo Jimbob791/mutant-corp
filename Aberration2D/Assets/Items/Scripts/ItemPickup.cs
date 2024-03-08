@@ -8,6 +8,7 @@ public class ItemPickup : MonoBehaviour
     public Item item;
     public ItemObject itemDrop;
     [SerializeField] LayerMask playerLayer;
+    public int fabricatorPosition = -1;
 
     [Space]
 
@@ -31,7 +32,7 @@ public class ItemPickup : MonoBehaviour
 
         tick = Random.Range(0, 1.5f);
         item = AssignItem(itemDrop.item);
-        startPos = transform.position;
+        startPos = transform.localPosition;
     }
 
     void Update()
@@ -43,7 +44,21 @@ public class ItemPickup : MonoBehaviour
             Player.instance.GetComponent<PlayerItems>().AddItem(item);
             ItemInfoDisplay.instance.ItemPickedUp(itemDrop);
             GameObject.Find("Inventory").GetComponent<InventoryDisplay>().CreateInventoryItems(Player.instance.GetComponent<PlayerItems>().items);
-            Destroy(this.gameObject);
+            if (fabricatorPosition == -1)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (i != fabricatorPosition)
+                    {
+                        Destroy(transform.parent.transform.parent.transform.GetChild(i).transform.GetChild(0).gameObject);
+                    }
+                }
+                Destroy(this.gameObject);
+            }
         }
     }
 

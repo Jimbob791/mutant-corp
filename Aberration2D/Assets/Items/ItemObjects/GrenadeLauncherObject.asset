@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: 15
   icon: {fileID: 21300000, guid: e0b7639f6600dc14bba67ac1d2ab201b, type: 3}
-  itemName: Grenade Launcher
+  itemName: Thumper GL
   itemRarity: Fabled
   itemDescription: A powerful underbarrel attachment. +10% chance to shoot an explosive
-    grenade every shot.
+    grenade.

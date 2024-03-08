@@ -41,6 +41,7 @@ public class PlayerMove : MonoBehaviour
     float timeSinceGrounded;
     float timeSinceJump;
     bool forcedJump = false;
+    bool groundedLastFrame;
     int usedJumps = 0;
 
     void Start()
@@ -133,6 +134,7 @@ public class PlayerMove : MonoBehaviour
         if (grounded && timeSinceJump <= bufferTime)
         {
             Jump(1, false);
+            
         }
         else if (!grounded && rb.velocity.y < 0 && timeSinceGrounded <= coyoteTime && timeSinceJump <= bufferTime)
         {
@@ -141,6 +143,7 @@ public class PlayerMove : MonoBehaviour
         else if (!grounded && usedJumps < numJumps && timeSinceJump <= bufferTime)
         {
             Jump(1, false);
+            usedJumps += 1;
         }
     }
 
@@ -150,7 +153,6 @@ public class PlayerMove : MonoBehaviour
         timeSinceJump = 999;
         jumping = true;
         desiredVelocity.y = jumpForce * force;
-        usedJumps = forced ? usedJumps : usedJumps + 1;
         StartCoroutine(ResetForced());
     }
 

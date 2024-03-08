@@ -83,8 +83,8 @@ public class BurstSwitch : Item
     {
         PlayerStats.instance.magazineSize += 2;
         PlayerStats.instance.burstSize += 2;
-        PlayerStats.instance.fireRate += 0.6f;
-        PlayerStats.instance.burstDelay = (PlayerStats.instance.fireRate / 2) / PlayerStats.instance.burstSize;
+        PlayerStats.instance.fireRate += 0.3f;
+        PlayerStats.instance.burstDelay = (PlayerStats.instance.fireRate / 3) / PlayerStats.instance.burstSize;
     }
 }
 

@@ -997,7 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4
-  numJumps: 1
+  numJumps: 0
   jumpForce: 14
   rollSpeed: 5
   fireRate: 0.4

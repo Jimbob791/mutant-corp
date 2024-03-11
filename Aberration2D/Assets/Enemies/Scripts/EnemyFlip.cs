@@ -8,12 +8,14 @@ public class EnemyFlip : MonoBehaviour
     [SerializeField] string type = "Flying";
 
     FlyingEnemy flying;
+    GroundEnemy ground;
 
-    float targetFlip = 1;
+    public float targetFlip = 1;
 
     void Start()
     {
         flying = GetComponent<FlyingEnemy>() != null ? GetComponent<FlyingEnemy>() : null;
+        ground = GetComponent<GroundEnemy>() != null ? GetComponent<GroundEnemy>() : null;
     }
 
     void Update()
@@ -23,6 +25,14 @@ public class EnemyFlip : MonoBehaviour
             if (Mathf.Abs(flying.desiredVelocity.x) > zeroRange)
             {
                 targetFlip = flying.desiredVelocity.x > 0 ? 1 : -1;
+            }
+        }
+
+        if (type == "Ground")
+        {
+            if (Mathf.Abs(ground.desiredVelocity.x) > zeroRange)
+            {
+                targetFlip = ground.desiredVelocity.x > 0 ? -1 : 1;
             }
         }
 

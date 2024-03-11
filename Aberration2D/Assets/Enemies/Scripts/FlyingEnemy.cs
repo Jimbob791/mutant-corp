@@ -6,8 +6,7 @@ public class FlyingEnemy : MonoBehaviour
 {
     [Header("Movement Config")]
     [SerializeField] float moveSpeed;
-    [SerializeField] float turnAccel;
-    [SerializeField] float avoidAccel;
+    [SerializeField] float rotSpeed;
     [SerializeField] float distance;
     [SerializeField] float aggroDistance;
 
@@ -15,22 +14,20 @@ public class FlyingEnemy : MonoBehaviour
 
     [Header("Collision Checks")]
     [SerializeField] float checkDistance;
-    [SerializeField] float checkAngle = 15;
     [SerializeField] LayerMask platformMask;
 
-    [HideInInspector] public Vector3 desiredVelocity;
+    [HideInInspector] public Vector2 desiredVelocity = new Vector2(0, 1);
 
-    GameObject player;
     Rigidbody2D rb;
-    Vector3 diff;
+    Vector2 diff;
+    Vector2 sums;
 
     void Start()
     {
-        player = Player.instance;
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         GetDirection();
 
@@ -39,50 +36,59 @@ public class FlyingEnemy : MonoBehaviour
 
     private void GetDirection()
     {
-        Vector3 target = player.transform.position - transform.position;
-        
-        if (Vector3.Distance(transform.position, player.transform.position) > aggroDistance)
-        {
-            target = Vector3.zero;
-        }
-        if (Vector3.Distance(transform.position, player.transform.position) < distance)
-        {
-            target = -target;
-        }
-
-        diff = Vector3.Lerp(diff, target, turnAccel);
+        Vector2 diff = Player.instance.transform.position - transform.position;
         diff.Normalize();
 
-        CheckPlatforms();
-        
-        desiredVelocity = Vector3.Lerp(desiredVelocity, diff, avoidAccel);
-        desiredVelocity.Normalize();
-        desiredVelocity *= moveSpeed;
+        float dist = Vector3.Distance(Player.instance.transform.position, transform.position);
+
+        if (dist < distance)
+        {
+            diff = -diff;
+        }
+        if (dist > aggroDistance)
+        {
+            diff = Vector3.zero;
+        }
+
+        diff = CheckPlatforms(diff).normalized;
+
+        desiredVelocity = DataFragment.RotateTowards(desiredVelocity, diff, rotSpeed, 1);
     }
 
-    private void CheckPlatforms()
+    private Vector2 CheckPlatforms(Vector2 diff)
     {
-        for (int i = 0; i < 6; i++)
+        sums = diff;
+        Vector2 starting = diff;
+
+        for (int i = 0; i < 8; i++)
         {
-            RaycastHit2D cast1 = Physics2D.Raycast(transform.position, Quaternion.AngleAxis(i * checkAngle, new Vector3(0, 0, 1)) * diff, checkDistance, platformMask);
-            RaycastHit2D cast2 = Physics2D.Raycast(transform.position, Quaternion.AngleAxis(-i * checkAngle, new Vector3(0, 0, 1)) * diff, checkDistance, platformMask);
-
-            if (cast1)
+            Vector2 castDir = Quaternion.AngleAxis(i * 15, new Vector3(0, 0, 1)) * starting;
+            if (Physics2D.Raycast(transform.position, castDir, checkDistance, platformMask))
             {
-                Debug.DrawLine(transform.position, cast1.point, Color.green, 0.0f, false);
-                diff = Quaternion.AngleAxis(-i * checkAngle, new Vector3(0, 0, 1)) * diff;
+                sums += -castDir;
+            }
+            else
+            {
+                sums += castDir;
             }
 
-            if (cast2)
+            castDir = Quaternion.AngleAxis(i * -15, new Vector3(0, 0, 1)) * starting;
+            if (Physics2D.Raycast(transform.position, castDir, checkDistance, platformMask))
             {
-                Debug.DrawLine(transform.position, cast2.point, Color.green, 0.0f, false);
-                diff = Quaternion.AngleAxis(i * checkAngle, new Vector3(0, 0, 1)) * diff;
+                sums += -castDir;
             }
-        } 
+            else
+            {
+                sums += castDir;
+            }
+        }
+        sums.Normalize();
+
+        return sums;
     }
 
     private void ApplyVelocity()
     {
-        rb.velocity = desiredVelocity;
+        rb.velocity = desiredVelocity * moveSpeed;
     }
 }

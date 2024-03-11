@@ -21,13 +21,22 @@ public class PlayerShoot : MonoBehaviour
     public int selfDamage;
     public float bulletSpeed;
     public float range;
+    public float damagePerData;
     public GameObject bullet;
+    public GameObject c4;
     public GameObject grenade;
+    public GameObject javelin;
+    public GameObject drone;
+    public int droneStacks;
 
     [Header("References")]
     [SerializeField] GameObject gun;
     [SerializeField] GameObject reloadBar;
     [SerializeField] GameObject reloadProgress;
+    [SerializeField] GameObject quickShotSFX;
+    [SerializeField] GameObject mediumShotSFX;
+    [SerializeField] GameObject longShotSFX;
+    [SerializeField] GameObject reloadSFX;
 
     PlayerAnimation pa;
     PlayerRoll pr;
@@ -36,10 +45,13 @@ public class PlayerShoot : MonoBehaviour
 
     bool canShoot = true;
     bool reloading = false;
-    int magazine;
+    public int magazine;
     float rotZ;
     float bulletRotZ;
     Vector3 diff;
+    public int numSpawned = 0;
+    int numDrones;
+    public List<GameObject> drones = new List<GameObject>();
 
     void Start()
     {
@@ -49,6 +61,9 @@ public class PlayerShoot : MonoBehaviour
         gunRenderer = gun.transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         magazine = magazineSize;
+        numDrones = droneStacks * 2;
+
+        StartCoroutine(SummonDrone());
     }
 
     void Update()
@@ -58,6 +73,8 @@ public class PlayerShoot : MonoBehaviour
         RotateGun();
 
         Shoot();
+
+        Drones();
     }
 
     private void RollingCheck()
@@ -116,6 +133,19 @@ public class PlayerShoot : MonoBehaviour
                     reloading = true;
                     StartCoroutine(Reload());
                 }
+
+                if (fireRate < 0.25)
+                {
+                    Instantiate(quickShotSFX);
+                }
+                else if (fireRate < 1.5f)
+                {
+                    Instantiate(mediumShotSFX);
+                }
+                else
+                {
+                    Instantiate(longShotSFX);
+                }
             }
             else
             {
@@ -127,6 +157,10 @@ public class PlayerShoot : MonoBehaviour
 
     IEnumerator Burst(int num, float delay)
     {
+        if (burstDelay == 0)
+        {
+            Instantiate(longShotSFX);
+        }
 
         for (int i = 0; i < num; i++)
         {
@@ -138,7 +172,7 @@ public class PlayerShoot : MonoBehaviour
             GameObject newBullet = Instantiate(bullet, muzzlePoint.position, Quaternion.identity);
             newBullet.transform.rotation = Quaternion.Euler(0f, 0f, bulletRotZ);
             newBullet.GetComponent<Bullet>().desiredVelocity = shootDir;
-            newBullet.GetComponent<Bullet>().damage = damage;
+            newBullet.GetComponent<Bullet>().damage = damage + Mathf.RoundToInt(GetComponent<PlayerData>().data * damagePerData);
             newBullet.GetComponent<Bullet>().speed = bulletSpeed;
             newBullet.GetComponent<Bullet>().homingStrength = homingStrength;
             Destroy(newBullet, range);
@@ -160,6 +194,11 @@ public class PlayerShoot : MonoBehaviour
                 StartCoroutine(Reload());
                 StartCoroutine(ResetShoot());
                 yield break;
+            }
+
+            if (burstDelay != 0)
+            {
+                Instantiate(quickShotSFX);
             }
 
             yield return new WaitForSeconds(delay);
@@ -205,6 +244,12 @@ public class PlayerShoot : MonoBehaviour
     private IEnumerator ResetReload()
     {
         yield return new WaitForSeconds(reloadTime);
+        FinishReload();
+    }
+
+    public void FinishReload()
+    {
+        Instantiate(reloadSFX);
         magazine = magazineSize;
         reloading = false;
         reloadBar.GetComponent<Image>().enabled = false;
@@ -218,9 +263,65 @@ public class PlayerShoot : MonoBehaviour
         GameObject newBullet = Instantiate(grenade, muzzlePoint.position, Quaternion.identity);
         newBullet.transform.rotation = Quaternion.Euler(0f, 0f, bulletRotZ);
         newBullet.GetComponent<Bullet>().desiredVelocity = shootDir;
-        newBullet.GetComponent<Bullet>().damage = damage * 5;
+        newBullet.GetComponent<Bullet>().damage = damage * 5 + Mathf.RoundToInt(GetComponent<PlayerData>().data * damagePerData);
         newBullet.GetComponent<Bullet>().speed = bulletSpeed / 1.5f;
         newBullet.GetComponent<Bullet>().homingStrength = 0;
         Destroy(newBullet, 60f);
+    }
+
+    public void ShootJavelin()
+    {
+        Vector3 shootDir = new Vector3(0, 1, 0);
+        shootDir = Quaternion.AngleAxis(Random.Range(-40.5f, 40.5f), new Vector3(0, 0, 1)) * shootDir;
+        bulletRotZ = Mathf.Atan2(shootDir.y, shootDir.x) * Mathf.Rad2Deg;
+
+        GameObject newBullet = Instantiate(javelin, muzzlePoint.position, Quaternion.identity);
+        newBullet.transform.rotation = Quaternion.Euler(0f, 0f, bulletRotZ);
+        newBullet.GetComponent<Bullet>().desiredVelocity = shootDir;
+        newBullet.GetComponent<Bullet>().damage = damage * 2 + Mathf.RoundToInt(GetComponent<PlayerData>().data * damagePerData);
+        Destroy(newBullet, 60f);
+    }
+
+    public void SpawnC4(GameObject enemy, int damage)
+    {
+        GameObject newBullet = GameObject.Instantiate(c4, enemy.transform.position, Quaternion.identity);
+        newBullet.GetComponent<C4>().damage = damage;
+        newBullet.GetComponent<C4>().enemy = enemy;
+        GameObject.Destroy(newBullet, 60f);
+    }
+
+    private IEnumerator SummonDrone()
+    {
+        if (droneStacks == 0)
+        {
+            yield return new WaitForSeconds(2);
+        }
+        else
+        {
+            yield return new WaitForSeconds(8 / droneStacks);
+        }
+        
+        if (numSpawned < numDrones)
+        {
+            GameObject newDrone = Instantiate(drone, transform.position, Quaternion.identity);
+            newDrone.GetComponent<DroneMovement>().damage = droneStacks * 30;
+            numSpawned += 1;
+            drones.Add(newDrone);
+            for(int i = 0; i < drones.Count; i++)
+            {
+                drones[i].GetComponent<DroneMovement>().offset = 0;
+            }
+        }
+        StartCoroutine(SummonDrone());
+    }
+
+    private void Drones()
+    {
+        numDrones = droneStacks * 3;
+        for(int i = 0; i < drones.Count; i++)
+        {
+            drones[i].GetComponent<DroneMovement>().index = i;
+            drones[i].GetComponent<DroneMovement>().numDrones = numDrones;
+        }
     }
 }

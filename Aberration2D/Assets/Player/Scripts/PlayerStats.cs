@@ -21,10 +21,14 @@ public class PlayerStats : MonoBehaviour
     public float burstDelay;
     public float reloadTime;
     public float bloomAngle;
+    public float damagePerData;
+    public int droneStacks;
 
     [Header("Health Config")]
     public int maxHealth;
     public int lifeSteal;
+    public int regen;
+    public int lives;
 
     [Header("Bullet Config")]
     public int damage;
@@ -75,8 +79,8 @@ public class PlayerStats : MonoBehaviour
             selfDamage = 0;
         if (bulletSpeed < 1)
             bulletSpeed = 1;
-        if (range < 0)
-            range = 0;
+        if (range < 0.1f)
+            range = 0.1f;
 
         playerMove.moveSpeed = moveSpeed;
         playerMove.jumpForce = jumpForce;
@@ -91,10 +95,14 @@ public class PlayerStats : MonoBehaviour
         playerShoot.burstDelay = burstDelay;
         playerShoot.reloadTime = reloadTime;
         playerShoot.bloomAngle = bloomAngle;
+        playerShoot.damagePerData = damagePerData;
+        playerShoot.droneStacks = droneStacks;
 
         playerhealth.maxHealth = maxHealth;
         playerhealth.lifeSteal = lifeSteal;
+        playerhealth.regen = regen;
         playerhealth.SetHealth();
+        playerhealth.lives = lives;
 
         playerShoot.damage = damage;
         playerShoot.homingStrength = homingStrength;

@@ -15,5 +15,5 @@ MonoBehaviour:
   item: 11
   icon: {fileID: 21300000, guid: 20ff552be36a42447b34c4feb5526cbf, type: 3}
   itemName: Nosferatu Blood
-  itemRarity: Exotic
-  itemDescription: The blood of a vampire. +1 life steal per bullet.
+  itemRarity: Fabled
+  itemDescription: The blood of a vampire. +2 life steal per bullet.

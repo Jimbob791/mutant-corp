@@ -16,6 +16,11 @@ public class DrillObjective : MonoBehaviour
     bool active = false;
     public bool complete = false;
     Vector3 pos;
+    [SerializeField] bool tutorial = false;
+    [SerializeField] GameObject startSFX;
+    [SerializeField] GameObject loopSFX;
+    [SerializeField] GameObject endSFX;
+    GameObject loop;
 
     void Start()
     {
@@ -31,7 +36,10 @@ public class DrillObjective : MonoBehaviour
             objective.text = "Enter Drill to Proceed";
             if (Input.GetKeyDown(KeyCode.E) && Physics2D.BoxCast(transform.position, new Vector2(1.5f, 1.5f), 0, Vector2.zero, 0, playerLayer))
             {
-                GameManager.instance.LoadMutations();
+                if (tutorial)
+                    GameManager.instance.LoadMenu();
+                else
+                    GameManager.instance.LoadMutations();
             }
             return;
         }
@@ -53,8 +61,22 @@ public class DrillObjective : MonoBehaviour
         {
             objective.text = "Drilling - Stay Alive";
             active = true;
+            Instantiate(startSFX);
+            StartCoroutine(DrillSound());
             dust.Play();
             GetComponent<Animator>().enabled = true;
         }
+    }
+
+    IEnumerator DrillSound()
+    {
+        yield return new WaitForSeconds(startSFX.GetComponent<AudioSource>().clip.length);
+        loop = Instantiate(loopSFX);
+        while (complete == false)
+        {
+            yield return null;
+        }
+        Destroy(loop);
+        Instantiate(endSFX);
     }
 }

@@ -9,6 +9,7 @@ public class ItemPickup : MonoBehaviour
     public ItemObject itemDrop;
     [SerializeField] LayerMask playerLayer;
     public int fabricatorPosition = -1;
+    [SerializeField] GameObject itemSFX;
 
     [Space]
 
@@ -41,6 +42,7 @@ public class ItemPickup : MonoBehaviour
         transform.localPosition = new Vector3(startPos.x, startPos.y + (Mathf.Sin(tick) * 0.1f), 0);
         if (Input.GetKeyDown(KeyCode.E) && Physics2D.BoxCast(transform.position, new Vector2(2, 2), 0, Vector2.zero, 0, playerLayer))
         {
+            Instantiate(itemSFX);
             Player.instance.GetComponent<PlayerItems>().AddItem(item);
             ItemInfoDisplay.instance.ItemPickedUp(itemDrop);
             GameObject.Find("Inventory").GetComponent<InventoryDisplay>().CreateInventoryItems(Player.instance.GetComponent<PlayerItems>().items);
@@ -113,8 +115,34 @@ public class ItemPickup : MonoBehaviour
                 return new AutoTrigger();
             case Items.RocketBoots:
                 return new RocketBoots();
-            case Items.GrenadeLauncher:
-                return new GrenadeLauncher();
+            case Items.ThumperGL:
+                return new ThumperGL();
+            case Items.SniperScope:
+                return new SniperScope();
+            case Items.Silencer:
+                return new Silencer();
+            case Items.GreenMaple:
+                return new GreenMaple();
+            case Items.ShotgunCells:
+                return new ShotgunCells();
+            case Items.Hourglass:
+                return new Hourglass();
+            case Items.PlasticC4:
+                return new PlasticC4();
+            case Items.JavelinSL:
+                return new JavelinSL();
+            case Items.PheonixTalon:
+                return new PheonixTalon();
+            case Items.DataLicense:
+                return new DataLicense();
+            case Items.RustedSickle:
+                return new RustedSickle();
+            case Items.GuardDogs:
+                return new GuardDogs();
+            case Items.Bacteriophage:
+                return new Bacteriophage();
+            case Items.TeslaShield:
+                return new TeslaShield();
             default:
                 return new Loudener();
         }

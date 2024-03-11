@@ -9,6 +9,7 @@ public class StatInfoDisplay : MonoBehaviour
     [SerializeField] GameObject inventory;
     [Space]
     [SerializeField] TextMeshProUGUI magSize;
+    [SerializeField] TextMeshProUGUI magLeft;
     [SerializeField] TextMeshProUGUI damage;
     [SerializeField] TextMeshProUGUI reload;
     [SerializeField] TextMeshProUGUI range;
@@ -35,7 +36,8 @@ public class StatInfoDisplay : MonoBehaviour
         cover.GetComponent<Animator>().SetBool("display", display);
         inventory.GetComponent<Animator>().SetBool("display", display);
 
-        magSize.text = PlayerStats.instance.magazineSize.ToString();
+        magSize.text = Player.instance.GetComponent<PlayerShoot>().magazine.ToString() + "/" + PlayerStats.instance.magazineSize.ToString();
+        magLeft.text = Player.instance.GetComponent<PlayerShoot>().magazine.ToString();
         damage.text = PlayerStats.instance.damage.ToString();
         reload.text = PlayerStats.instance.reloadTime.ToString();
         range.text = PlayerStats.instance.range.ToString();

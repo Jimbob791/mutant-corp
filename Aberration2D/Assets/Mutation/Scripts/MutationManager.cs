@@ -10,9 +10,14 @@ public class MutationManager : MonoBehaviour
     [SerializeField] GameObject pod;
     [SerializeField] GameObject selector;
     [SerializeField] GameObject cover;
-    [SerializeField] GameObject prefab;
+    [SerializeField] GameObject[] prefabs = new GameObject[3];
     [SerializeField] GameObject choiceParent;
-    [SerializeField] int numChoices = 3;
+    [SerializeField] GameObject selectSFX;
+    [SerializeField] GameObject confirmSFX;
+    [SerializeField] GameObject createSFX;
+    [SerializeField] GameObject rollSFX;
+    [SerializeField] GameObject slamSFX;
+    [SerializeField] GameObject hurtSFX;
 
     List<ItemObject> items = new List<ItemObject>();
     List<ItemObject> mutations = new List<ItemObject>();
@@ -45,32 +50,26 @@ public class MutationManager : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            selected += 1;
-            selected = selected >= numChoices ? 0 : selected;
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            selected -= 1;
-            selected = selected < 0 ? numChoices - 1 : selected;
-        }
-
         selector.transform.localPosition = new Vector3(0, selected * -210, 0);
     }
 
     IEnumerator ChooseMutationOptions()
     {
-        for (int i = 0; i < numChoices; i++)
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i < 3; i++)
         {
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.5f);
+
+            Instantiate(createSFX);
 
             ItemObject chosen = mutations[Random.Range(0, mutations.Count)];
             chosenMutations.Add(chosen);
             mutations.Remove(chosen);
 
-            GameObject newChoice = Instantiate(prefab, choiceParent.transform);
+            GameObject newChoice = prefabs[i];
             newChoice.transform.localPosition = new Vector3(0, i * -210, 0);
+            newChoice.transform.GetChild(0).gameObject.GetComponent<Image>().enabled = true;
             newChoice.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = chosen.itemName;
             newChoice.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = chosen.itemDescription;
             //newChoice.transform.GetChild(3).gameObject.GetComponent<Image>().sprite = chosen.icon;
@@ -81,9 +80,13 @@ public class MutationManager : MonoBehaviour
 
     public void Confirm()
     {
+        if (confirmed)
+        {
+            return;
+        }
+
         confirmed = true;
         title.text = "Mutation Confirmed";
-        StartCoroutine(EnablePod());
         cover.GetComponent<Animator>().enabled = true;
 
         AddMutation(chosenMutations[selected]);
@@ -94,29 +97,35 @@ public class MutationManager : MonoBehaviour
             options[i].GetComponent<Animator>().enabled = true;
             options[i].GetComponent<Animator>().speed = Random.Range(0.5f, 0.8f);
         }
+        Instantiate(confirmSFX);
+        StartCoroutine(EnablePod());
         StartCoroutine(CallExit());
     }
 
     private IEnumerator EnablePod()
     {
         yield return new WaitForSeconds(1);
+        Instantiate(hurtSFX);
         pod.GetComponent<Animator>().SetTrigger("select");
+        yield return new WaitForSeconds(1.64f);
+        Instantiate(slamSFX);
     }
 
     private IEnumerator CallExit()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
         GameManager.instance.ExitMutations();
     }
 
     IEnumerator TitleIntro()
     {
+        yield return new WaitForSeconds(0.7f);
         string t = " Select a Mutation";
 
         for (int i = 0; i < t.Length; i++)
         {
             title.text = title.text + t[i];
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.08f);
         }
 
         StartCoroutine(TitleFlicker());
@@ -147,5 +156,23 @@ public class MutationManager : MonoBehaviour
         }
         ItemStorage.instance.items.Add(new ItemList(item, item.GetName(), 1));
         item.OnPickup(1);
+    }
+
+    public void Selected1()
+    {
+        selected = 0;
+        Instantiate(selectSFX);
+    }
+
+    public void Selected2()
+    {
+        selected = 1;
+        Instantiate(selectSFX);
+    }
+
+    public void Selected3()
+    {
+        selected = 2;
+        Instantiate(selectSFX);
     }
 }

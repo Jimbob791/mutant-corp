@@ -75,13 +75,19 @@ public class InventoryDisplay : MonoBehaviour
             spawned = Instantiate(invPrefab, transform.position, Quaternion.identity, backingParent.transform);
 
             spawned.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = invList[i].obj.icon;
-            //spawned.GetComponent<Image>().material = SetMaterial(invList[i].obj.itemRarity);
+            
+            spawned.GetComponent<InventoryItem>().item = invList[i].obj;
+
             for (int t = 0; t < 5; t++)
             {
                 spawned.GetComponent<InventoryItem>().texts[t].text = invList[i].stacks.ToString();
             }
 
-            spawned.transform.localPosition = new Vector3(-19f + (i * 2f), 1.1f, 0f);
+            if (i < 20)
+                spawned.transform.localPosition = new Vector3(-19f + (i * 2f), 1.1f, 0f);
+            else
+                spawned.transform.localPosition = new Vector3(-19f + ((i - 20) * 2f), -0.9f, 0f);
+                
             objects.Add(spawned);
         }
     }

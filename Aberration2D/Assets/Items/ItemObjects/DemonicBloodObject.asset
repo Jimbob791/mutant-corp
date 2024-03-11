@@ -16,5 +16,5 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 0923125f6b5867e49925bf22ffba3cf1, type: 3}
   itemName: Demonic Blood
   itemRarity: Mutation
-  itemDescription: A deal with the devil, accursed blood. +1 self damage per bullet.
-    -50% fire rate. +100% damage.
+  itemDescription: A deal with the devil, the accursed blood. +1 self damage per
+    bullet. +100% damage.

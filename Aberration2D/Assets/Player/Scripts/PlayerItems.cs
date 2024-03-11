@@ -38,4 +38,20 @@ public class PlayerItems : MonoBehaviour
             items[i].item.OnShoot(items[i].stacks);
         }
     }
+
+    public void Hit(GameObject enemy)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            items[i].item.OnHit(enemy, items[i].stacks);
+        }
+    }
+
+    public void Death(GameObject enemy)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            items[i].item.OnKill(enemy, items[i].stacks);
+        }
+    }
 }

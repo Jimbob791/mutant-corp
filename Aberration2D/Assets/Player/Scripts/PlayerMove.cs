@@ -43,6 +43,8 @@ public class PlayerMove : MonoBehaviour
     bool forcedJump = false;
     bool groundedLastFrame;
     int usedJumps = 0;
+    Vector3 stepGround = new Vector3(0.2f, -0.45f, 0);
+    Vector3 stepAir = new Vector3(0.2f, 0.05f, 0);
 
     void Start()
     {
@@ -78,6 +80,20 @@ public class PlayerMove : MonoBehaviour
     private void DetectGround()
     {
         grounded = Physics2D.BoxCast(groundCheck.position, checkSize, 0, Vector2.zero, 0, platformMask);
+
+        if (grounded)
+        {
+            if (Physics2D.BoxCast(new Vector3(transform.position.x + stepGround.x * xInput, transform.position.y + stepGround.y, 0), new Vector2(0.05f, 0.05f), 0, Vector2.zero, 0, platformMask))
+            {
+                if (!Physics2D.BoxCast(new Vector3(transform.position.x + stepAir.x * xInput, transform.position.y + stepAir.y, 0), new Vector2(0.05f, 0.05f), 0, Vector2.zero, 0, platformMask))
+                {
+                    if (xInput != 0)
+                    {
+                        transform.position = transform.position + new Vector3(0, 0.55f, 0);
+                    }
+                }
+            }
+        }
     }
 
     private void DetectCeiling()

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class EnemyRanged : MonoBehaviour
 {
-    [SerializeField] int damage;
+    public int damage;
     [SerializeField] GameObject projectile;
+    [SerializeField] GameObject shootSFX;
     [SerializeField] float shotCooldown;
     [SerializeField] float shootDistance;
 
@@ -34,6 +35,8 @@ public class EnemyRanged : MonoBehaviour
     private IEnumerator ResetCooldown()
     {
         yield return new WaitForSeconds(0.25f);
+
+        Instantiate(shootSFX);
 
         Vector3 shootDir = player.transform.position - transform.position;
         shootDir.Normalize();

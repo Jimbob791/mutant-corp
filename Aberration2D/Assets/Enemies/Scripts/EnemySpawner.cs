@@ -5,15 +5,26 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] float spawnDistance;
-    [SerializeField] List<Enemy> enemies = new List<Enemy>();
+    [SerializeField] float waveInterval;
+    [SerializeField] float creditMultiplier;
+    public float difficultyMultiplier;
+    public GameObject warning;
 
+    [Space]
+
+    [SerializeField] List<Enemy> enemies = new List<Enemy>();
     [SerializeField] List<Transform> spawnPosList = new List<Transform>();
 
-    int iterations = 50;
+    // int iterations = 50;
     Transform chosenTransform;
+    float creditTimer = 0;
+    float waveTimer = 999;
+    [SerializeField] float credits;
+    Enemy chosenEnemy;
 
     void Start()
     {
+        credits = 30;
         foreach (Transform child in transform)
         {
             spawnPosList.Add(child);
@@ -22,32 +33,76 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
+        creditTimer += Time.deltaTime;
+        waveTimer += Time.deltaTime;
+
+        if (creditTimer > 1)
+        {
+            AddCredits();
+            creditTimer = 0;
+        }
+
+        if (waveTimer > waveInterval)
+        {
+            SpawnWave();
+            waveTimer = 0;
+        }
+    }
+
+    private void AddCredits()
+    {
+        credits += creditMultiplier * (1 + 0.4f * difficultyMultiplier);
+    }
+
+    private void SpawnWave()
+    {
+        int sumWeights = 0;
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].timeSinceSpawned += Time.deltaTime;
-            
-            if (enemies[i].timeSinceSpawned > enemies[i].chosenSpawnTime)
+            sumWeights += enemies[i].weight;
+        }
+
+        while (credits > 0)
+        {
+            int iterations = 0;
+            int chosenWeight = Random.Range(0, sumWeights);
+            Debug.Log(chosenWeight);
+            for (int i = 0; i < enemies.Count; i++)
             {
-                SpawnEnemy(enemies[i].prefab);
-                enemies[i].timeSinceSpawned = 0;
-                enemies[i].chosenSpawnTime = Random.Range(enemies[i].minSpawnTime, enemies[i].maxSpawnTime);
+                if (chosenWeight < enemies[i].weight && credits >= enemies[i].cost && credits < enemies[i].cost * 4)
+                {
+                    chosenEnemy = enemies[i];
+                    break;
+                }
+                
+                chosenWeight -= enemies[i].weight;
+            }
+
+            credits -= chosenEnemy.cost;
+            iterations += 1;
+            if (iterations > 50)
+            {
+                return;
+            }
+
+            while (true)
+            {
+                int randPosIndex = Random.Range(0, spawnPosList.Count);
+                if (Vector3.Distance(spawnPosList[randPosIndex].position, Player.instance.transform.position) < spawnDistance)
+                {
+                    SpawnEnemy(chosenEnemy, spawnPosList[randPosIndex]);
+                    break;
+                }
             }
         }
     }
 
-    private void SpawnEnemy(GameObject prefab)
+    private void SpawnEnemy(Enemy enemy, Transform chosenTransform)
     {
-        for (int i = 0; i < iterations; i++)
-        {
-            int index = Random.Range(0, spawnPosList.Count);
-            if (Vector3.Distance(spawnPosList[index].position, Player.instance.transform.position) < spawnDistance)
-            {
-                chosenTransform = spawnPosList[index];
-                break;
-            }
-        }
-
-        Instantiate(prefab, chosenTransform.position, Quaternion.identity);
+        GameObject warn = Instantiate(warning, chosenTransform.position + new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), 0), Quaternion.identity);
+        warn.GetComponent<EnemyWarning>().enemyToSpawn = enemy.prefab;
+        warn.GetComponent<EnemyWarning>().enemyHealthMulti = difficultyMultiplier + 0.5f;
+        warn.GetComponent<EnemyWarning>().enemyDamageMulti = difficultyMultiplier  + 0.5f;
     }
 }
 
@@ -55,8 +110,6 @@ public class EnemySpawner : MonoBehaviour
 public class Enemy
 {
     public GameObject prefab;
-    public float minSpawnTime;
-    public float maxSpawnTime;
-    public float chosenSpawnTime;
-    public float timeSinceSpawned;
+    public int cost;
+    public int weight;
 }

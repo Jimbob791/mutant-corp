@@ -16,5 +16,5 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 8ce1465f18f146643a99c3d62182b387, type: 3}
   itemName: Acrobatic Muscle
   itemRarity: Mutation
-  itemDescription: Mutated tendons spliced into your body. +50% movement speed. +20%
+  itemDescription: Mutated tendons spliced into your body. +20% movement speed. +10%
     jump height. -60% roll speed.

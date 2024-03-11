@@ -26,6 +26,16 @@ public abstract class Item
     {
 
     }
+
+    public virtual void OnHit(GameObject enemy, int stacks)
+    {
+
+    }
+
+    public virtual void OnKill(GameObject enemy, int stacks)
+    {
+
+    }
 }
 
 // -------------------------------------------------------------- Items --------------------------------------------------------------
@@ -125,7 +135,7 @@ public class NosferatuBlood : Item
 
     public override void OnPickup(int stacks)
     {
-        PlayerStats.instance.lifeSteal += 1;
+        PlayerStats.instance.lifeSteal += 2;
     }
 }
 
@@ -155,11 +165,11 @@ public class RocketBoots : Item
     }
 }
 
-public class GrenadeLauncher : Item
+public class ThumperGL : Item
 {
     public override string GetName()
     {
-        return "Grenade Launcher";
+        return "Thumper GL";
     }
 
     public override void OnShoot(int stacks)
@@ -167,6 +177,155 @@ public class GrenadeLauncher : Item
         if (Random.Range(0f, 100f) < stacks * 10f)
         {
             Player.instance.GetComponent<PlayerShoot>().ShootGrenade();
+        }
+    }
+}
+
+public class Silencer : Item
+{
+    public override string GetName()
+    {
+        return "Silencer";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.bulletSpeed += 2;
+    }
+}
+
+public class SniperScope : Item
+{
+    public override string GetName()
+    {
+        return "Sniper Scope";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.range += 0.2f;
+    }
+}
+
+public class GreenMaple : Item
+{
+    public override string GetName()
+    {
+        return "Green Maple";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.regen += 1;
+    }
+}
+
+public class JavelinSL : Item
+{
+    public override string GetName()
+    {
+        return "Javelin SL";
+    }
+
+    public override void OnHit(GameObject enemy, int stacks)
+    {
+        if (Random.Range(0f, 100f) < stacks * 8f)
+        {
+            Player.instance.GetComponent<PlayerShoot>().ShootJavelin();
+        }
+    }
+}
+
+public class Hourglass : Item
+{
+    public override string GetName()
+    {
+        return "Hourglass";
+    }
+
+    public override void OnReload(int stacks)
+    {
+        if (Random.Range(0f, 100f) < stacks * 2f)
+        {
+            Player.instance.GetComponent<PlayerShoot>().FinishReload();
+        }
+    }
+}
+
+public class RustedSickle : Item
+{
+    public override string GetName()
+    {
+        return "Rusted Sickle";
+    }
+
+    public override void OnHit(GameObject enemy, int stacks)
+    {
+        if (Random.Range(0f, 100f) < stacks * 15f)
+        {
+            enemy.GetComponent<EnemyHealth>().bleedDamage += stacks * 2;
+        }
+    }
+}
+
+public class PlasticC4 : Item
+{
+    public override string GetName()
+    {
+        return "Plastic C4";
+    }
+
+    public override void OnHit(GameObject enemy, int stacks)
+    {
+        if (Random.Range(0f, 100f) < stacks * 10f)
+        {
+            Player.instance.GetComponent<PlayerShoot>().SpawnC4(enemy, 2 * stacks + Mathf.RoundToInt(Player.instance.GetComponent<PlayerData>().data * Player.instance.GetComponent<PlayerShoot>().damagePerData));
+        }
+    }
+}
+
+public class GuardDogs : Item
+{
+    public override string GetName()
+    {
+        return "Guard Dogs";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.droneStacks += 1;
+    }
+}
+
+public class TeslaShield : Item
+{
+    public override string GetName()
+    {
+        return "Tesla Shield";
+    }
+
+    public override void OnHit(GameObject enemy, int stacks)
+    {
+        if (Random.Range(0f, 100f) < stacks * 3f)
+        {
+            PlayerStats.instance.maxHealth += 1;
+            Player.instance.GetComponent<PlayerHealth>().TakeDamage(-1, true);
+        }
+    }
+}
+
+public class Bacteriophage : Item
+{
+    public override string GetName()
+    {
+        return "Bacteriophage";
+    }
+
+    public override void OnHit(GameObject enemy, int stacks)
+    {
+        if (Random.Range(0f, 100f) < stacks * 5f)
+        {
+            enemy.GetComponent<EnemyHealth>().explode = true;
         }
     }
 }
@@ -187,7 +346,7 @@ public class SpringReload : Item
 
     public override void OnReload(int stacks)
     {
-        Player.instance.GetComponent<PlayerMove>().Jump(1 + stacks / 4, true);
+        Player.instance.GetComponent<PlayerMove>().Jump(1 + stacks, true);
     }
 }
 
@@ -201,7 +360,6 @@ public class DemonicBlood : Item
     public override void OnPickup(int stacks)
     {
         PlayerStats.instance.selfDamage += 1;
-        PlayerStats.instance.fireRate *= 2;
         PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 2f);
     }
 }
@@ -215,7 +373,7 @@ public class AllSeeingBullets : Item
 
     public override void OnPickup(int stacks)
     {
-        PlayerStats.instance.homingStrength += 0.1f;
+        PlayerStats.instance.homingStrength += 2f;
         PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 0.9f);
     }
 }
@@ -229,7 +387,7 @@ public class SteelHeart : Item
 
     public override void OnPickup(int stacks)
     {
-        PlayerStats.instance.moveSpeed *= 0.6f;
+        PlayerStats.instance.moveSpeed *= 0.7f;
         PlayerStats.instance.jumpForce *= 0.9f;
         PlayerStats.instance.maxHealth *= 3;
     }
@@ -244,8 +402,8 @@ public class AcrobaticMuscle : Item
 
     public override void OnPickup(int stacks)
     {
-        PlayerStats.instance.moveSpeed *= 1.5f;
-        PlayerStats.instance.jumpForce *= 1.1f;
+        PlayerStats.instance.moveSpeed *= 1.3f;
+        PlayerStats.instance.jumpForce *= 1.05f;
         PlayerStats.instance.rollSpeed *= 0.4f;
     }
 }
@@ -260,9 +418,54 @@ public class BionicFinger : Item
     public override void OnPickup(int stacks)
     {
         PlayerStats.instance.fireRate *= 0.5f;
-        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 0.3f);
+        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 0.5f);
         PlayerStats.instance.magazineSize += 10;
         PlayerStats.instance.reloadTime += 1;
+    }
+}
+
+public class ShotgunCells : Item
+{
+    public override string GetName()
+    {
+        return "Shotgun Cells";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.fireRate *= 2;
+        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 0.4f);
+        PlayerStats.instance.magazineSize += 20;
+        PlayerStats.instance.burstSize += 6;
+        PlayerStats.instance.burstDelay = 0;
+        PlayerStats.instance.bloomAngle += 20;
+        PlayerStats.instance.range -= 0.25f;
+    }
+}
+
+public class DataLicense : Item
+{
+    public override string GetName()
+    {
+        return "Data License";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.damagePerData += 0.01f;
+    }
+}
+
+public class PheonixTalon : Item
+{
+    public override string GetName()
+    {
+        return "Pheonix Talon";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.lives += 1;
     }
 }
 
@@ -283,5 +486,18 @@ public enum Items
     BionicFinger,
     AutoTrigger,
     RocketBoots,
-    GrenadeLauncher
+    ThumperGL,
+    SniperScope,
+    Silencer,
+    GreenMaple,
+    ShotgunCells,
+    JavelinSL,
+    PheonixTalon,
+    PlasticC4,
+    RustedSickle,
+    DataLicense,
+    Hourglass,
+    GuardDogs,
+    Bacteriophage,
+    TeslaShield
 }

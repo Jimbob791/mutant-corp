@@ -36,7 +36,8 @@ Transform:
   m_LocalPosition: {x: 20, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3163371085355355968}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -199,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zeroRange: 0.05
   type: Flying
+  targetFlip: 1
 --- !u!114 &491316556199405229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,17 +213,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8f565c91e3096459d5ea396117210f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  turnAccel: 0.01
-  avoidAccel: 0.025
+  moveSpeed: 1.5
+  rotSpeed: 1
   distance: 5
-  aggroDistance: 20
-  checkDistance: 0.7
-  checkAngle: 15
+  aggroDistance: 40
+  checkDistance: 1
   platformMask:
     serializedVersion: 2
     m_Bits: 128
-  desiredVelocity: {x: 0, y: 0, z: 0}
+  desiredVelocity: {x: 0, y: 0}
 --- !u!114 &491316556199405230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,9 +234,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b0026cb6a100449948bbed39402f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 70
   health: 0
+  data: 5
+  dataPrefab: {fileID: 2664889532157127630, guid: 4a3daceaa3c96d94884117cc935cf88b, type: 3}
   flashTime: 0.1
+  bleedDamage: 0
+  deathFX: {fileID: 6062964217273456192, guid: 4e9dea80e568a7240a79e45a4e3d7b9b, type: 3}
+  hitFX: {fileID: 6062964217273456192, guid: 8f16995153b342e44adb0ee24f64a81e, type: 3}
+  bleedFX: {fileID: 4161764604441918135, guid: ca6681b159814154fb042a2adc602f9f, type: 3}
+  deathSFX: {fileID: 2047436351219239068, guid: 7b40f1abee09d9046b612dec1ceddcb0, type: 3}
+  explosionSFX: {fileID: 2047436351219239068, guid: 8e94b2052e2de7d4c9a3b6646a0e6a19, type: 3}
+  explosionFX: {fileID: 549855353625248857, guid: 68f25a04c9e40b444be335785fc68913, type: 3}
+  damageIndicator: {fileID: 4673681599019401965, guid: d8c1ea11b2df8104f9d5582843ebb045, type: 3}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  explode: 0
 --- !u!114 &491316556199405231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,5 +265,117 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 25
   projectile: {fileID: 5356456876435040265, guid: 92afa3c5b0f6fe04d9302df7d3106cdc, type: 3}
+  shootSFX: {fileID: 2047436351219239068, guid: dcfbfb4f90267e7449ab8a46b0b61fe4, type: 3}
   shotCooldown: 2
   shootDistance: 15
+--- !u!1 &2475444321875670956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3163371085355355968}
+  - component: {fileID: 2138761422345087328}
+  m_Layer: 0
+  m_Name: Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3163371085355355968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2475444321875670956}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 491316556199405222}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2138761422345087328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2475444321875670956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.8039216, g: 0.94509804, b: 0.8100118, a: 1}
+  m_Intensity: 0.3
+  m_LightVolumeIntensity: 1
+  m_LightVolumeIntensityEnabled: 0
+  m_ApplyToSortingLayers: 00000000af06d224b1c3bad2
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_Vertices:
+  - position: {x: 0.9985302, y: 0.9985302, z: 0}
+    color: {r: 0.70710677, g: 0.70710677, b: 0, a: 0}
+    uv: {x: 0, y: 0}
+  - position: {x: 0.9985302, y: 0.9985302, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  - position: {x: -0.9985302, y: 0.9985302, z: 0}
+    color: {r: -0.70710677, g: 0.70710677, b: 0, a: 0}
+    uv: {x: 0, y: 0}
+  - position: {x: -0.9985302, y: 0.9985302, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  - position: {x: -0.99853003, y: -0.9985304, z: 0}
+    color: {r: -0.70710665, g: -0.7071069, b: 0, a: 0}
+    uv: {x: 0, y: 0}
+  - position: {x: -0.99853003, y: -0.9985304, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  - position: {x: 0.99853003, y: -0.9985304, z: 0}
+    color: {r: 0.70710665, g: -0.7071069, b: 0, a: 0}
+    uv: {x: 0, y: 0}
+  - position: {x: 0.99853003, y: -0.9985304, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  - position: {x: 0, y: 0, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  m_Triangles: 030001000800020000000100030002000100050003000800040002000300050004000300070005000800060004000500070006000500010007000800000006000700010000000700
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1.5
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}

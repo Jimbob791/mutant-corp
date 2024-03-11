@@ -5,6 +5,7 @@ using UnityEngine;
 public class PickupSpawner : MonoBehaviour
 {
     [Header("Spawner Info")]
+    [SerializeField] float creditMulitplier = 1;
     [SerializeField] List<Transform> spawnPosList = new List<Transform>();
     [SerializeField] List<Chest> interactables = new List<Chest>();
 
@@ -29,7 +30,7 @@ public class PickupSpawner : MonoBehaviour
         itemList = AllItems.instance.items;
         SortItems();
 
-        credits = Random.Range(100, 300);
+        credits = Mathf.RoundToInt(Random.Range(100, 300) * creditMulitplier);
 
         int sumWeights = 0;
         for (int i = 0; i < interactables.Count; i++)

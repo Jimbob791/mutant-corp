@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMelee : MonoBehaviour
 {
-    [SerializeField] int damage;
+    public int damage;
 
     void OnTriggerStay2D(Collider2D col)
     {

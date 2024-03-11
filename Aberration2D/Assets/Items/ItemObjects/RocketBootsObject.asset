@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: 14
   icon: {fileID: 21300000, guid: 7031f6c2710282d44a7206b288eec30b, type: 3}
-  itemName: Steel Heart
+  itemName: Rocket Boots
   itemRarity: Exotic
   itemDescription: Powerful cybernetic shoes grant extra aerial mastery. +1 mid air
     jump.

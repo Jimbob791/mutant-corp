@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f07a6d3486e78d943bc84eead3f8032a, type: 3}
+  m_Name: DataLicenseObject
+  m_EditorClassIdentifier: 
+  item: 24
+  icon: {fileID: 21300000, guid: 42211bc524e8916409273f73155ec8ef, type: 3}
+  itemName: Data License
+  itemRarity: Mutation
+  itemDescription: A license to liberate with research and science on your side.
+    +1 damage per stack for every 100 data you are holding.

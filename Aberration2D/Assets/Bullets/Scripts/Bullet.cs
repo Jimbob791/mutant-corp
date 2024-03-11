@@ -9,6 +9,10 @@ public class Bullet : MonoBehaviour
     public float speed;
     public float homingStrength;
     [SerializeField] float gravity;
+    [SerializeField] float acceleration;
+    [SerializeField] GameObject damageIndicator;
+    [SerializeField] GameObject deathFX;
+    [SerializeField] GameObject hitSFX;
 
     GameObject[] enemies;
     Rigidbody2D rb;
@@ -29,15 +33,14 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
+        speed += acceleration;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         closestEnemy = GetClosestEnemyTransform(enemies);
         if (homingStrength != 0 && closestEnemy != null)
         {
-            desiredVelocity = Vector3.Lerp(desiredVelocity, closestEnemy.transform.position - transform.position, homingStrength / 10);
-        }
-        else
-        {
-            desiredVelocity.y -= gravity;
+            Vector2 diff = closestEnemy.position - transform.position;
+            diff.Normalize();
+            desiredVelocity = DataFragment.RotateTowards(desiredVelocity, diff, homingStrength * Mathf.Deg2Rad, 0);
         }
     }
 
@@ -81,14 +84,23 @@ public class Bullet : MonoBehaviour
             if (GetComponent<Grenade>() != null)
             {
                 GetComponent<Grenade>().damage = damage;
+                Player.instance.GetComponent<PlayerItems>().Hit(col.gameObject);
                 GetComponent<Grenade>().Explode();
             }
             else
             {
-                col.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
+                Instantiate(hitSFX);
+                col.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage, true);
                 Player.instance.GetComponent<PlayerHealth>().TakeDamage(Player.instance.GetComponent<PlayerHealth>().lifeSteal * -1, true);
+                Player.instance.GetComponent<PlayerItems>().Hit(col.gameObject);
                 Destroy(this.gameObject);
             }
         }
+    }
+
+    void OnDisable()
+    {
+        if(!this.gameObject.scene.isLoaded) return;
+        if (deathFX != null) Instantiate(deathFX, transform.position, Quaternion.identity);
     }
 }

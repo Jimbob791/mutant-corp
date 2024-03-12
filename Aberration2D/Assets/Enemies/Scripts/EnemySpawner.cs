@@ -78,20 +78,24 @@ public class EnemySpawner : MonoBehaviour
                 chosenWeight -= enemies[i].weight;
             }
 
-            credits -= chosenEnemy.cost;
             iterations += 1;
             if (iterations > 50)
             {
                 return;
             }
 
-            while (true)
+            if (chosenEnemy != null)
             {
-                int randPosIndex = Random.Range(0, spawnPosList.Count);
-                if (Vector3.Distance(spawnPosList[randPosIndex].position, Player.instance.transform.position) < spawnDistance)
+                credits -= chosenEnemy.cost;
+
+                while (true)
                 {
-                    SpawnEnemy(chosenEnemy, spawnPosList[randPosIndex]);
-                    break;
+                    int randPosIndex = Random.Range(0, spawnPosList.Count);
+                    if (Vector3.Distance(spawnPosList[randPosIndex].position, Player.instance.transform.position) < 20)
+                    {
+                        SpawnEnemy(chosenEnemy, spawnPosList[randPosIndex]);
+                        break;
+                    }
                 }
             }
         }
@@ -101,8 +105,8 @@ public class EnemySpawner : MonoBehaviour
     {
         GameObject warn = Instantiate(warning, chosenTransform.position + new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), 0), Quaternion.identity);
         warn.GetComponent<EnemyWarning>().enemyToSpawn = enemy.prefab;
-        warn.GetComponent<EnemyWarning>().enemyHealthMulti = difficultyMultiplier + 0.5f;
-        warn.GetComponent<EnemyWarning>().enemyDamageMulti = difficultyMultiplier  + 0.5f;
+        warn.GetComponent<EnemyWarning>().enemyHealthMulti = 0.8f * difficultyMultiplier + 0.5f;
+        warn.GetComponent<EnemyWarning>().enemyDamageMulti = 0.3f * difficultyMultiplier  + 0.7f;
     }
 }
 

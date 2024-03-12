@@ -194,8 +194,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1.5
-  rotSpeed: 0.5
-  distance: 6
+  rotSpeed: 0.1
+  distance: 2
   aggroDistance: 40
   checkDistance: 2
   platformMask:

@@ -35,7 +35,8 @@ public class GameManager : MonoBehaviour
             GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
             for (int i = 0; i < spawners.Length; i++)
             {
-                spawners[i].GetComponent<EnemySpawner>().difficultyMultiplier = Mathf.Pow(1.5f, (difficulty - 2));
+                if (spawners[i].GetComponent<EnemySpawner>() != null) spawners[i].GetComponent<EnemySpawner>().difficultyMultiplier = Mathf.Pow(1.5f, (difficulty - 2));
+                if (spawners[i].GetComponent<ObjectiveSpawner>() != null) spawners[i].GetComponent<ObjectiveSpawner>().difficultyMultiplier = Mathf.Pow(1.5f, (difficulty - 2));
             }
 
             PlayerStats.instance.SetPlayerStats();

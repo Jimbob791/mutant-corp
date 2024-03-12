@@ -60,6 +60,7 @@ public class DrillObjective : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.E) && Physics2D.BoxCast(transform.position, new Vector2(1.5f, 1.5f), 0, Vector2.zero, 0, playerLayer))
         {
             objective.text = "Drilling - Stay Alive";
+            GetComponent<ObjectiveSpawner>().SpawnWave();
             active = true;
             Instantiate(startSFX);
             StartCoroutine(DrillSound());

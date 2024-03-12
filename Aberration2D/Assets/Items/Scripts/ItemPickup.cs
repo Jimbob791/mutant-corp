@@ -143,6 +143,16 @@ public class ItemPickup : MonoBehaviour
                 return new Bacteriophage();
             case Items.TeslaShield:
                 return new TeslaShield();
+            case Items.Dewdrop:
+                return new Dewdrop();
+            case Items.HealingCrystal:
+                return new HealingCrystal();
+            case Items.BipodHands:
+                return new BipodHands();
+            case Items.Nectar:
+                return new Nectar();
+            case Items.SealOfApproval:
+                return new SealOfApproval();
             default:
                 return new Loudener();
         }

@@ -15,10 +15,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] GameObject hitFX;
     [SerializeField] GameObject bleedFX;
     [SerializeField] GameObject deathSFX;
-    [SerializeField] GameObject explosionSFX;
-    [SerializeField] GameObject explosionFX;
     [SerializeField] GameObject damageIndicator;
-    [SerializeField] LayerMask enemyLayer;
 
     SpriteRenderer sr;
     bool alive = true;
@@ -74,15 +71,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if (explode)
         {
-            Instantiate(explosionSFX);
-            Instantiate(explosionFX);
-            float explosionRange = 1;
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, explosionRange, Vector2.zero, 0, enemyLayer);
-            for (int i = 0; i < hits.Length; i++)
-            {
-                if (hits[i].transform.gameObject != this.gameObject)
-                    hits[i].transform.gameObject.GetComponent<EnemyHealth>().TakeDamage(Mathf.RoundToInt(maxHealth / 10), true);
-            }
+            
         }
         Instantiate(deathFX, transform.position, Quaternion.identity);
         Instantiate(deathSFX);

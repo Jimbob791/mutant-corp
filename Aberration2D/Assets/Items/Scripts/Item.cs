@@ -27,6 +27,11 @@ public abstract class Item
 
     }
 
+    public virtual void OnChest(int stacks)
+    {
+
+    }
+
     public virtual void OnHit(GameObject enemy, int stacks)
     {
 
@@ -77,7 +82,7 @@ public class MutantBullets : Item
 
     public override void OnPickup(int stacks)
     {
-        PlayerStats.instance.damage += 4;
+        PlayerStats.instance.damage += 2;
         PlayerStats.instance.magazineSize -= 2;
     }
 }
@@ -121,8 +126,8 @@ public class SaltedOrgans : Item
 
     public override void OnPickup(int stacks)
     {
-        PlayerStats.instance.maxHealth += 50;
-        Player.instance.GetComponent<PlayerHealth>().TakeDamage(-50, true);
+        PlayerStats.instance.maxHealth += 20;
+        Player.instance.GetComponent<PlayerHealth>().TakeDamage(-20, true);
     }
 }
 
@@ -279,7 +284,7 @@ public class PlasticC4 : Item
     {
         if (Random.Range(0f, 100f) < stacks * 10f)
         {
-            Player.instance.GetComponent<PlayerShoot>().SpawnC4(enemy, 2 * stacks + Mathf.RoundToInt(Player.instance.GetComponent<PlayerData>().data * Player.instance.GetComponent<PlayerShoot>().damagePerData));
+            Player.instance.GetComponent<PlayerShoot>().SpawnC4(enemy, 4 * stacks + Mathf.RoundToInt(Player.instance.GetComponent<PlayerData>().data * Player.instance.GetComponent<PlayerShoot>().damagePerData));
         }
     }
 }
@@ -327,6 +332,60 @@ public class Bacteriophage : Item
         {
             enemy.GetComponent<EnemyHealth>().explode = true;
         }
+    }
+}
+
+public class Dewdrop : Item
+{
+    public override string GetName()
+    {
+        return "Dewdrop";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.maxHealth += stacks * 5;
+        Player.instance.GetComponent<PlayerHealth>().TakeDamage(-stacks * 5, true);
+    }
+}
+
+public class HealingCrystal : Item
+{
+    public override string GetName()
+    {
+        return "Healing Crystal";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.maxHealth += 50;
+        Player.instance.GetComponent<PlayerHealth>().TakeDamage(-50 * 5, true);
+    }
+}
+
+public class SealOfApproval : Item
+{
+    public override string GetName()
+    {
+        return "Seal of Approval";
+    }
+
+    public override void OnChest(int stacks)
+    {
+        Player.instance.GetComponent<PlayerHealth>().TakeDamage(-stacks * 5, true);
+    }
+}
+
+public class Nectar : Item
+{
+    public override string GetName()
+    {
+        return "Nectar";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.moveSpeed += 0.25f;
     }
 }
 
@@ -387,8 +446,8 @@ public class SteelHeart : Item
 
     public override void OnPickup(int stacks)
     {
-        PlayerStats.instance.moveSpeed *= 0.7f;
-        PlayerStats.instance.jumpForce *= 0.9f;
+        PlayerStats.instance.reloadTime *= 1.8f;
+        PlayerStats.instance.bulletSpeed *= 0.8f;
         PlayerStats.instance.maxHealth *= 3;
     }
 }
@@ -434,11 +493,11 @@ public class ShotgunCells : Item
     public override void OnPickup(int stacks)
     {
         PlayerStats.instance.fireRate *= 2;
-        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 0.4f);
+        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 0.6f);
         PlayerStats.instance.magazineSize += 20;
         PlayerStats.instance.burstSize += 6;
         PlayerStats.instance.burstDelay = 0;
-        PlayerStats.instance.bloomAngle += 20;
+        PlayerStats.instance.bloomAngle += 10;
         PlayerStats.instance.range -= 0.25f;
     }
 }
@@ -466,6 +525,25 @@ public class PheonixTalon : Item
     public override void OnPickup(int stacks)
     {
         PlayerStats.instance.lives += 1;
+    }
+}
+
+public class BipodHands : Item
+{
+    public override string GetName()
+    {
+        return "Bipod Hands";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.fireRate *= 4;
+        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 8);
+        PlayerStats.instance.magazineSize = Mathf.RoundToInt(PlayerStats.instance.magazineSize / 4);
+        PlayerStats.instance.bloomAngle = 0;
+        PlayerStats.instance.range += 1f;
+        PlayerStats.instance.bulletSpeed += 50f;
+        PlayerStats.instance.reloadTime += 2;
     }
 }
 
@@ -499,5 +577,10 @@ public enum Items
     Hourglass,
     GuardDogs,
     Bacteriophage,
-    TeslaShield
+    TeslaShield,
+    Dewdrop,
+    HealingCrystal,
+    BipodHands,
+    Nectar,
+    SealOfApproval
 }

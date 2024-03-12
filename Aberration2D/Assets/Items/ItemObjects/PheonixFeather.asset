@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: 21
   icon: {fileID: 21300000, guid: ee13eb47d022aa740bab9ee927943453, type: 3}
-  itemName: Pheonix Talon
+  itemName: Phoenix Talon
   itemRarity: Mutation
   itemDescription: Imbues the power of fire through your blood. +1 revival on death,
     use it wisely.

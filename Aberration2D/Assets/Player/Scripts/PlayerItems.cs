@@ -54,4 +54,12 @@ public class PlayerItems : MonoBehaviour
             items[i].item.OnKill(enemy, items[i].stacks);
         }
     }
+
+    public void Chest()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            items[i].item.OnChest(items[i].stacks);
+        }
+    }
 }

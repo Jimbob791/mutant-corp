@@ -17,4 +17,4 @@ MonoBehaviour:
   itemName: Steel Heart
   itemRarity: Mutation
   itemDescription: Titanium heart implants greatly improve blood flow. +200% max
-    health. -20% jump height. -40% move speed.
+    health. -20% bullet speed. +80% reload time.

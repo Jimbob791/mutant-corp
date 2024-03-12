@@ -37,38 +37,31 @@ public class ObjectiveSpawner : MonoBehaviour
             sumWeights += enemies[i].weight;
         }
 
-        while (credits > 0)
+        for (int k = 0; k < 50; k++)
         {
-            int iterations = 0;
             int chosenWeight = Random.Range(0, sumWeights);
             for (int i = 0; i < enemies.Count; i++)
             {
-                if (chosenWeight < enemies[i].weight && credits >= enemies[i].cost && credits < enemies[i].cost * 4)
+                if (chosenWeight < enemies[i].weight)
                 {
                     chosenEnemy = enemies[i];
+                    if (chosenEnemy.cost < credits / 4)
+                        chosenEnemy = null;
                     break;
                 }
-                
                 chosenWeight -= enemies[i].weight;
-            }
-
-            iterations += 1;
-            if (iterations > 50)
-            {
-                return;
             }
 
             if (chosenEnemy != null)
             {
-                credits -= chosenEnemy.cost;
-
-                while (true)
+                while (credits >= chosenEnemy.cost)
                 {
                     int randPosIndex = Random.Range(0, spawnPosList.Count);
-                    if (Vector3.Distance(spawnPosList[randPosIndex].position, Player.instance.transform.position) < 20)
+                    credits -= chosenEnemy.cost;
+
+                    if (Vector3.Distance(spawnPosList[randPosIndex].position, Player.instance.transform.position) < 15)
                     {
                         SpawnEnemy(chosenEnemy, spawnPosList[randPosIndex]);
-                        break;
                     }
                 }
             }

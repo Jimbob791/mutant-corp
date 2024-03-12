@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     [SerializeField] List<string> stages = new List<string>();
     public float difficulty = 0;
+    public string mode;
+    [SerializeField] float globalTimer;
     [SerializeField] GameObject slamSFX;    
     [SerializeField] GameObject closeSFX;   
     [SerializeField] GameObject openSFX;   
+
+    bool count = true;
 
     void Awake()
     {
@@ -48,7 +53,9 @@ public class GameManager : MonoBehaviour
         }
         else if (scene.name == "Menu")
         {
+            count = true;
             Time.timeScale = 1;
+            globalTimer = 0;
             BaseStats baseStats = GameObject.Find("StatStorage").GetComponent<BaseStats>();
             PlayerStats stats = PlayerStats.instance;
             stats.moveSpeed = baseStats.moveSpeed;
@@ -98,7 +105,36 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "Menu")
         {
             ItemStorage.instance.SaveItems(Player.instance.GetComponent<PlayerItems>().items);
+            if (mode == "EasyTime" && difficulty == 5)
+            {
+                count = false;
+                PlayerPrefs.SetFloat("EasyTime", globalTimer);
+                GameObject.Find("Loading").GetComponent<Animator>().SetBool("load", true);
+                StartCoroutine(Load("Menu"));
+                return;
+            }
+            if (mode == "MedTime" && difficulty == 8)
+            {
+                count = false;
+                PlayerPrefs.SetFloat("MedTime", globalTimer);
+                GameObject.Find("Loading").GetComponent<Animator>().SetBool("load", true);
+                StartCoroutine(Load("Menu"));
+                return;
+            }
+            if (mode == "HardTime" && difficulty == 15)
+            {
+                count = false;
+                PlayerPrefs.SetFloat("HardTime", globalTimer);
+                GameObject.Find("Loading").GetComponent<Animator>().SetBool("load", true);
+                StartCoroutine(Load("Menu"));
+                return;
+            }
         }
+        else if (mode == "HardTime")
+        {
+            difficulty = 4;
+        }
+
         GameObject.Find("Loading").GetComponent<Animator>().SetBool("load", true);
         StartCoroutine(Load("Mutations"));
     }
@@ -163,5 +199,25 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         target.transform.localPosition = Vector3.zero;
+    }
+
+    void Update()
+    {
+        if (SceneManager.GetActiveScene().name != "Menu" && SceneManager.GetActiveScene().name != "Mutations" && SceneManager.GetActiveScene().name != "Tutorial")
+        {
+            if (count) globalTimer += Time.deltaTime;
+            GameObject.Find("TimerDisplay").GetComponent<TextMeshProUGUI>().text = ConvertTimeToString(globalTimer);
+            GameObject.Find("TimerDisplayBack").GetComponent<TextMeshProUGUI>().text = ConvertTimeToString(globalTimer);
+        }
+    }
+
+    private string ConvertTimeToString(float time)
+    {
+        float hours = Mathf.FloorToInt(time / 3600);
+        float minutes = Mathf.FloorToInt((time / 60) % 60);
+        float seconds = Mathf.FloorToInt(time % 60);
+        float milliSeconds = Mathf.FloorToInt((time % 1) * 1000);
+ 
+        return hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00") + "." + milliSeconds.ToString("00");
     }
 }

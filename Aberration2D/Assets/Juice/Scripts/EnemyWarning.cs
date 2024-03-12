@@ -20,6 +20,10 @@ public class EnemyWarning : MonoBehaviour
         {
             enemy.GetComponent<EnemyRanged>().damage = Mathf.RoundToInt(enemy.GetComponent<EnemyRanged>().damage * enemyDamageMulti);
         }
+        if (enemy.GetComponent<EnemyLaser>() != null)
+        {
+            enemy.GetComponent<EnemyLaser>().damage = Mathf.RoundToInt(enemy.GetComponent<EnemyLaser>().damage * enemyDamageMulti);
+        }
         ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
         em.enabled = false;
         Destroy(this.gameObject, 2f);

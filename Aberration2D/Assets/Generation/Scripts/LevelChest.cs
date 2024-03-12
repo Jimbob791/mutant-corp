@@ -37,6 +37,7 @@ public class LevelChest : MonoBehaviour
 
     private void SpawnPickup(ItemObject itemToSpawn)
     {
+        Player.instance.GetComponent<PlayerItems>().Chest();
         Instantiate(openSFX);
         GameObject newPickup = Instantiate(pickupPrefab, transform.position + spawnOffset, Quaternion.identity);
         newPickup.GetComponent<ItemPickup>().itemDrop = itemToSpawn;

@@ -48,6 +48,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amount, bool ignoreImmunity)
     {
+        if (amount >= maxHealth && health > maxHealth * 0.9f)
+        {
+            amount = Mathf.RoundToInt(maxHealth * 0.9f);
+        }
         if (!ignoreImmunity)
         {
             if (invincible || GetComponent<PlayerRoll>().rolling)

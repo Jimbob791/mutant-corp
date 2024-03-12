@@ -12,8 +12,8 @@ public class EnemySlam : MonoBehaviour
     Animator anim;
     GroundEnemy ground;
     float attackTime;
-    float attackCooldown = 4;
-    int numProjectiles = 8;
+    float attackCooldown = 3;
+    int numProjectiles = 20;
     Vector3 shootDir;
 
     void Start()
@@ -47,7 +47,7 @@ public class EnemySlam : MonoBehaviour
         {
             Player.instance.GetComponent<PlayerHealth>().TakeDamage(damage, false);
         }
-        GameManager.instance.Shake(0.05f, 0.1f);
+        GameManager.instance.Shake(0.15f, 0.25f);
         Vector3 originalDir = new Vector3(-2, 1, 0);
         originalDir.Normalize();
         for (int i = 0; i < numProjectiles; i++)

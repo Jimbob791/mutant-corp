@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b0026cb6a100449948bbed39402f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 70
+  maxHealth: 60
   health: 0
   data: 5
   dataPrefab: {fileID: 2664889532157127630, guid: 4a3daceaa3c96d94884117cc935cf88b, type: 3}
@@ -244,12 +244,7 @@ MonoBehaviour:
   hitFX: {fileID: 6062964217273456192, guid: 8f16995153b342e44adb0ee24f64a81e, type: 3}
   bleedFX: {fileID: 4161764604441918135, guid: ca6681b159814154fb042a2adc602f9f, type: 3}
   deathSFX: {fileID: 2047436351219239068, guid: 7b40f1abee09d9046b612dec1ceddcb0, type: 3}
-  explosionSFX: {fileID: 2047436351219239068, guid: 8e94b2052e2de7d4c9a3b6646a0e6a19, type: 3}
-  explosionFX: {fileID: 549855353625248857, guid: 68f25a04c9e40b444be335785fc68913, type: 3}
   damageIndicator: {fileID: 4673681599019401965, guid: d8c1ea11b2df8104f9d5582843ebb045, type: 3}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 256
   explode: 0
 --- !u!114 &491316556199405231
 MonoBehaviour:

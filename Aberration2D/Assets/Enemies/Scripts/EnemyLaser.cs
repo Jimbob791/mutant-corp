@@ -8,6 +8,7 @@ public class EnemyLaser : MonoBehaviour
     [SerializeField] GameObject laserPrefab;
     [SerializeField] float attackRange;
     [SerializeField] float cooldown;
+    [SerializeField] Transform shootPos;
 
     IEnumerator Start()
     {
@@ -25,10 +26,11 @@ public class EnemyLaser : MonoBehaviour
             yield return null;
         }
 
-        GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+        GameObject laser = Instantiate(laserPrefab, shootPos.localPosition, Quaternion.identity);
         if (laser.GetComponent<Laser>() != null)
         {
             laser.GetComponent<Laser>().damage = damage;
+            laser.GetComponent<Laser>().offset = shootPos.localPosition;
             Vector3 diff = Player.instance.transform.position - transform.position;
             diff.Normalize();
             laser.GetComponent<Laser>().shootDir = diff;

@@ -234,7 +234,7 @@ public class JavelinSL : Item
 
     public override void OnHit(GameObject enemy, int stacks)
     {
-        if (Random.Range(0f, 100f) < stacks * 8f)
+        if (Random.Range(0f, 100f) < stacks * 5f)
         {
             Player.instance.GetComponent<PlayerShoot>().ShootJavelin();
         }
@@ -250,7 +250,7 @@ public class Hourglass : Item
 
     public override void OnReload(int stacks)
     {
-        if (Random.Range(0f, 100f) < stacks * 2f)
+        if (Random.Range(0f, 100f) < stacks * 5f)
         {
             Player.instance.GetComponent<PlayerShoot>().FinishReload();
         }
@@ -284,7 +284,7 @@ public class PlasticC4 : Item
     {
         if (Random.Range(0f, 100f) < stacks * 10f)
         {
-            Player.instance.GetComponent<PlayerShoot>().SpawnC4(enemy, 4 * stacks + Mathf.RoundToInt(Player.instance.GetComponent<PlayerData>().data * Player.instance.GetComponent<PlayerShoot>().damagePerData));
+            Player.instance.GetComponent<PlayerShoot>().SpawnC4(enemy, 5 * stacks + Mathf.RoundToInt(Player.instance.GetComponent<PlayerData>().data * Player.instance.GetComponent<PlayerShoot>().damagePerData));
         }
     }
 }

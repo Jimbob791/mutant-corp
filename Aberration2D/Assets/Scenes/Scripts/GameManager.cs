@@ -130,10 +130,6 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
-        else if (mode == "HardTime")
-        {
-            difficulty = 4;
-        }
 
         GameObject.Find("Loading").GetComponent<Animator>().SetBool("load", true);
         StartCoroutine(Load("Mutations"));

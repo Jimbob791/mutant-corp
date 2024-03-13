@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] float spawnDistance;
-    [SerializeField] float waveInterval;
-    [SerializeField] float creditMultiplier;
+    public float waveInterval;
+    public float creditMultiplier;
     public float difficultyMultiplier;
     public GameObject warning;
 
@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void AddCredits()
     {
-        credits += creditMultiplier * 3 * (1 + 0.4f * difficultyMultiplier);
+        credits += creditMultiplier * (1 + 0.3f * difficultyMultiplier);
     }
 
     private void SpawnWave()
@@ -63,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
             sumWeights += enemies[i].weight;
         }
 
-        for (int k = 0; k < 50; k++)
+        for (int k = 0; k < 100; k++)
         {
             int chosenWeight = Random.Range(0, sumWeights);
             for (int i = 0; i < enemies.Count; i++)
@@ -71,10 +71,18 @@ public class EnemySpawner : MonoBehaviour
                 if (chosenWeight < enemies[i].weight)
                 {
                     chosenEnemy = enemies[i];
-                    if (chosenEnemy.cost < credits / 4)
+                    if (chosenEnemy.cost < credits / 5)
+                    {
+                        Debug.Log(chosenEnemy.prefab.name + " is Too Cheap");
                         chosenEnemy = null;
+                    }
                     else if (chosenEnemy.cost > credits)
                         chosenEnemy = null;
+                    else if (Mathf.RoundToInt(Mathf.Log(difficultyMultiplier, 1.5f) + 2) < chosenEnemy.stage)
+                    {
+                        Debug.Log("Too Early for " + chosenEnemy.prefab.name);
+                        chosenEnemy = null;
+                    }
                     break;
                 }
                 chosenWeight -= enemies[i].weight;
@@ -82,14 +90,21 @@ public class EnemySpawner : MonoBehaviour
 
             if (chosenEnemy != null)
             {
+                int iterations = 0;
                 while (credits >= chosenEnemy.cost)
                 {
+                    iterations += 1;
                     int randPosIndex = Random.Range(0, spawnPosList.Count);
-                    credits -= chosenEnemy.cost;
 
                     if (Vector3.Distance(spawnPosList[randPosIndex].position, Player.instance.transform.position) < 15)
                     {
                         SpawnEnemy(chosenEnemy, spawnPosList[randPosIndex]);
+                        credits -= chosenEnemy.cost;
+                    }
+
+                    if (iterations > 100)
+                    {
+                        break;
                     }
                 }
             }
@@ -100,8 +115,8 @@ public class EnemySpawner : MonoBehaviour
     {
         GameObject warn = Instantiate(warning, chosenTransform.position + new Vector3(Random.Range(-2.5f, 2.5f), Random.Range(-2.5f, 2.5f), 0), Quaternion.identity);
         warn.GetComponent<EnemyWarning>().enemyToSpawn = enemy.prefab;
-        warn.GetComponent<EnemyWarning>().enemyHealthMulti = 0.8f * difficultyMultiplier + 0.5f;
-        warn.GetComponent<EnemyWarning>().enemyDamageMulti = 0.3f * difficultyMultiplier  + 0.7f;
+        warn.GetComponent<EnemyWarning>().enemyHealthMulti = difficultyMultiplier + 0.4f;
+        warn.GetComponent<EnemyWarning>().enemyDamageMulti = 0.5f * difficultyMultiplier  + 0.6f;
     }
 }
 
@@ -111,4 +126,5 @@ public class Enemy
     public GameObject prefab;
     public int cost;
     public int weight;
+    public int stage;
 }

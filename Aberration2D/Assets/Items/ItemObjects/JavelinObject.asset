@@ -15,6 +15,6 @@ MonoBehaviour:
   item: 20
   icon: {fileID: 21300000, guid: f7bbffc9f0f91604389e0901f8b39d71, type: 3}
   itemName: Javelin SL
-  itemRarity: Common
-  itemDescription: Military grade shoulder-launched rocket. +8% chance on hit to
+  itemRarity: Special
+  itemDescription: Military grade shoulder-launched rocket. +5% chance on hit to
     launch a homing missile.

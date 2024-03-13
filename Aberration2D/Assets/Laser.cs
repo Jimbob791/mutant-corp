@@ -12,6 +12,7 @@ public class Laser : MonoBehaviour
     [SerializeField] GameObject sfx;
     [SerializeField] GameObject endFX;
     public GameObject enemy;
+    public Vector3 offset;
     public Vector2 shootDir;
     [SerializeField] LayerMask playerLayer;
 
@@ -46,7 +47,7 @@ public class Laser : MonoBehaviour
         damageLine.enabled = true;
         laserLight.enabled = true;
         float duration = 0;
-        GameManager.instance.Shake(0.1f, 0.1f);
+        GameManager.instance.Shake(0.18f, 0.3f);
         while (duration < shootTime)
         {
             duration += Time.fixedDeltaTime;
@@ -66,7 +67,7 @@ public class Laser : MonoBehaviour
     void Update()
     {
         if (enemy != null)
-            transform.position = enemy.transform.position;
+            transform.position = enemy.transform.position + offset;
         else
         {
             Destroy(instant);

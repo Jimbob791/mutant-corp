@@ -52,10 +52,12 @@ public class LaserBig : MonoBehaviour
         damageLine.enabled = true;
         laserLight.enabled = true;
         float duration = 0;
-        GameManager.instance.Shake(shootTime + 0.4f, 0.5f);
+        GameManager.instance.Shake(shootTime + 0.4f, 0.4f);
+        float lastScan = 0;
         while (duration < shootTime)
         {
             duration += Time.fixedDeltaTime;
+            lastScan += (1/60);
             
             damageLine.startWidth = shootWidth;
             int change = (int)Mathf.Floor(duration * 8) % 2 == 0 ? -1 : 1 ;
@@ -65,14 +67,18 @@ public class LaserBig : MonoBehaviour
             {
                 Player.instance.GetComponent<PlayerHealth>().TakeDamage(damage, false);
             }
-            RaycastHit2D[] hit = Physics2D.CircleCastAll(transform.position, shootWidth / 2, shootDir, Mathf.Infinity, enemyLayer);
-            if (hit.Length != 0 )
+            if (lastScan > 0.3f)
             {
-                for (int i = 0; i < hit.Length; i++)
+                lastScan = 0;
+                RaycastHit2D[] hit = Physics2D.CircleCastAll(transform.position, shootWidth / 2, shootDir, Mathf.Infinity, enemyLayer);
+                if (hit.Length != 0)
                 {
-                    if (hit[i].transform.gameObject != enemy)
+                    for (int i = 0; i < hit.Length; i++)
                     {
-                        hit[i].transform.gameObject.GetComponent<EnemyHealth>().TakeDamage(1, true);
+                        if (hit[i].transform.gameObject != enemy)
+                        {
+                            hit[i].transform.gameObject.GetComponent<EnemyHealth>().TakeDamage(20, true);
+                        }
                     }
                 }
             }

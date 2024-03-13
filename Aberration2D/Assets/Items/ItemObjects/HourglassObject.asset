@@ -16,5 +16,5 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 7f3af45783b80134587c72c5170ae517, type: 3}
   itemName: Hourglass
   itemRarity: Common
-  itemDescription: A bit of youth for the many. +2% chance to instantly reload when
+  itemDescription: A bit of youth for the many. +5% chance to instantly reload when
     reloading.

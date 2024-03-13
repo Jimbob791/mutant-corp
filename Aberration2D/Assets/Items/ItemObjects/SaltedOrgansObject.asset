@@ -16,4 +16,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 43e91608f41cc4f41ad550de5a95abcc, type: 3}
   itemName: Salted Organs
   itemRarity: Common
-  itemDescription: A delicacy to die for. +50 max health.
+  itemDescription: A delicacy to die for. +20 max health.

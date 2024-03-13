@@ -31,6 +31,17 @@ public class ObjectiveSpawner : MonoBehaviour
 
     public void SpawnWave()
     {
+        GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
+        for (int i = 0; i < spawners.Length; i++)
+        {
+            if (spawners[i].GetComponent<EnemySpawner>() != null)
+            {
+                EnemySpawner spawner = spawners[i].GetComponent<EnemySpawner>();
+                spawner.waveInterval = 8;
+                spawner.creditMultiplier = spawner.creditMultiplier * 1.2f;
+            }
+        }
+
         int sumWeights = 0;
         for (int i = 0; i < enemies.Count; i++)
         {
@@ -57,11 +68,11 @@ public class ObjectiveSpawner : MonoBehaviour
                 while (credits >= chosenEnemy.cost)
                 {
                     int randPosIndex = Random.Range(0, spawnPosList.Count);
-                    credits -= chosenEnemy.cost;
 
                     if (Vector3.Distance(spawnPosList[randPosIndex].position, Player.instance.transform.position) < 15)
                     {
                         SpawnEnemy(chosenEnemy, spawnPosList[randPosIndex]);
+                        credits -= chosenEnemy.cost;
                     }
                 }
             }
@@ -72,7 +83,7 @@ public class ObjectiveSpawner : MonoBehaviour
     {
         GameObject warn = Instantiate(warning, chosenTransform.position + new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), 0), Quaternion.identity);
         warn.GetComponent<EnemyWarning>().enemyToSpawn = enemy.prefab;
-        warn.GetComponent<EnemyWarning>().enemyHealthMulti = 0.8f * difficultyMultiplier + 0.6f;
-        warn.GetComponent<EnemyWarning>().enemyDamageMulti = 0.3f * difficultyMultiplier  + 0.8f;
+        warn.GetComponent<EnemyWarning>().enemyHealthMulti = difficultyMultiplier + 0.4f;
+        warn.GetComponent<EnemyWarning>().enemyDamageMulti = 0.5f * difficultyMultiplier  + 0.6f;
     }
 }

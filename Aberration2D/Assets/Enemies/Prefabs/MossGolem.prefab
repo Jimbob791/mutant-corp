@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 6054459347739586427}
   - component: {fileID: 6054459347739586426}
   - component: {fileID: 6054459347739586368}
+  - component: {fileID: 291245251132970952}
   m_Layer: 8
   m_Name: MossGolem
   m_TagString: Enemy
@@ -104,6 +105,7 @@ Transform:
   - {fileID: 6054459347848140668}
   - {fileID: 6054459346027009054}
   - {fileID: 6054459346904955493}
+  - {fileID: 7731636128270739409}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -277,7 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b0026cb6a100449948bbed39402f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 450
+  maxHealth: 400
   health: 0
   data: 10
   dataPrefab: {fileID: 2664889532157127630, guid: 4a3daceaa3c96d94884117cc935cf88b, type: 3}
@@ -347,6 +349,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackPos: {fileID: 6054459346027009054}
+--- !u!114 &291245251132970952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6054459347739586421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a64f3321a80cdd4c8a96508814cb8e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 35
+  laserPrefab: {fileID: 7299801178311869149, guid: a4bd904ff00fac342a47bfad8489d7fc, type: 3}
+  attackRange: 50
+  cooldown: 8
+  shootPos: {fileID: 7731636128270739409}
 --- !u!1 &6054459347848140671
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,4 +427,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6054459347739586371}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8600481873706914016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7731636128270739409}
+  m_Layer: 8
+  m_Name: Eye
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7731636128270739409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8600481873706914016}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.84, y: 0.35, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6054459347739586371}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

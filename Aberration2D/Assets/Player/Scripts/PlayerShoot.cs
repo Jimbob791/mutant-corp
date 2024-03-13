@@ -278,7 +278,7 @@ public class PlayerShoot : MonoBehaviour
         GameObject newBullet = Instantiate(javelin, muzzlePoint.position, Quaternion.identity);
         newBullet.transform.rotation = Quaternion.Euler(0f, 0f, bulletRotZ);
         newBullet.GetComponent<Bullet>().desiredVelocity = shootDir;
-        newBullet.GetComponent<Bullet>().damage = damage * 2 + Mathf.RoundToInt(GetComponent<PlayerData>().data * damagePerData);
+        newBullet.GetComponent<Bullet>().damage = Mathf.RoundToInt(damage * 1.5f) + Mathf.RoundToInt(GetComponent<PlayerData>().data * damagePerData);
         Destroy(newBullet, 60f);
     }
 

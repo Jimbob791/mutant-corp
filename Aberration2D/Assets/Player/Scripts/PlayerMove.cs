@@ -81,13 +81,13 @@ public class PlayerMove : MonoBehaviour
     {
         grounded = Physics2D.BoxCast(groundCheck.position, checkSize, 0, Vector2.zero, 0, platformMask);
 
-        if (grounded)
+        if (grounded || GetComponent<PlayerRoll>().rolling)
         {
             if (Physics2D.BoxCast(new Vector3(transform.position.x + stepGround.x * xInput, transform.position.y + stepGround.y, 0), new Vector2(0.05f, 0.05f), 0, Vector2.zero, 0, platformMask))
             {
                 if (!Physics2D.BoxCast(new Vector3(transform.position.x + stepAir.x * xInput, transform.position.y + stepAir.y, 0), new Vector2(0.05f, 0.05f), 0, Vector2.zero, 0, platformMask))
                 {
-                    if (xInput != 0)
+                    if (xInput != 0 || GetComponent<PlayerRoll>().rolling)
                     {
                         transform.position = transform.position + new Vector3(0, 0.55f, 0);
                     }

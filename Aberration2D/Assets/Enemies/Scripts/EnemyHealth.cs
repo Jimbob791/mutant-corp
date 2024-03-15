@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
     [Header("Health Config")]
     public int maxHealth = 100;
     public int health;
+    public GameObject healthDrop;
     public int data;
     [SerializeField] GameObject dataPrefab;
     [SerializeField] float flashTime;
@@ -38,6 +39,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int amount, bool flash)
     {
+        GameManager.instance.damageDealt += amount;
         health -= amount;
 
         alive = health > 0;
@@ -55,6 +57,7 @@ public class EnemyHealth : MonoBehaviour
             Instantiate(bleedFX, transform.position, Quaternion.identity);
             return;
         }
+        GameManager.instance.TimeFreeze(0.01f);
         Instantiate(hitFX, transform.position, Quaternion.identity);
 
         StartCoroutine(HitFlash());
@@ -69,9 +72,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void Death()
     {
+        GameManager.instance.Shake(0.1f, 0.1f);
+        GameManager.instance.TimeFreeze(0.1f);
+        GameManager.instance.numEnemiesKilled += 1;
         if (explode)
         {
-            
+            GameObject newDrop = Instantiate(healthDrop, transform.position, Quaternion.identity);
+            newDrop.GetComponent<HealthDrop>().healAmount = Mathf.RoundToInt(maxHealth / 50);
         }
         Instantiate(deathFX, transform.position, Quaternion.identity);
         Instantiate(deathSFX);

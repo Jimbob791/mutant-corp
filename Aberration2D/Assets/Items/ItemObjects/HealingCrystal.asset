@@ -15,5 +15,5 @@ MonoBehaviour:
   item: 30
   icon: {fileID: 21300000, guid: 74a422aa3c6437445883236f6fefb06b, type: 3}
   itemName: Healing Crystal
-  itemRarity: Uncommon
-  itemDescription: A powerful gem hidden amongst stones. +50 max health.
+  itemRarity: Special
+  itemDescription: A powerful gem hidden amongst stones. +30 max health.

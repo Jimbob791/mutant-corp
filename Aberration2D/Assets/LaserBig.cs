@@ -26,16 +26,25 @@ public class LaserBig : MonoBehaviour
 
     GameObject instant;
     bool flickering = false;
+    GameObject music;
 
     IEnumerator Start()
-    {   
-        float startVolume = GameObject.Find("MainMusic").GetComponent<AudioSource>().volume;
+    {  
+        if (GameObject.Find("MainMusic") != null)
+        {
+            music = GameObject.Find("MainMusic");
+        }
+        else if (GameObject.Find("DrillMusic") != null)
+        {
+            music = GameObject.Find("DrillMusic");
+        }
+        float startVolume = music.GetComponent<AudioSource>().volume;
         for (int i = 0; i < 60; i++)
         {
-            GameObject.Find("MainMusic").GetComponent<AudioSource>().volume -= startVolume / 60;
+            music.GetComponent<AudioSource>().volume -= startVolume / 60;
             yield return new WaitForSeconds(1/60f);
         }
-        GameObject.Find("MainMusic").GetComponent<AudioSource>().volume = 0;
+        music.GetComponent<AudioSource>().volume = 0;
         float rotZ = Mathf.Atan2(shootDir.y, shootDir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ);
         laserLight.enabled = false;
@@ -101,7 +110,7 @@ public class LaserBig : MonoBehaviour
 
         for (int i = 0; i < 60; i++)
         {
-            GameObject.Find("MainMusic").GetComponent<AudioSource>().volume += startVolume / 60;
+            music.GetComponent<AudioSource>().volume += startVolume / 60;
             yield return new WaitForSeconds(1/60f);
         }
 

@@ -63,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
             sumWeights += enemies[i].weight;
         }
 
-        for (int k = 0; k < 100; k++)
+        for (int k = 0; k < 15; k++)
         {
             int chosenWeight = Random.Range(0, sumWeights);
             for (int i = 0; i < enemies.Count; i++)
@@ -108,6 +108,9 @@ public class EnemySpawner : MonoBehaviour
                     }
                 }
             }
+
+            if (credits < 5)
+                break;
         }
     }
 
@@ -115,8 +118,8 @@ public class EnemySpawner : MonoBehaviour
     {
         GameObject warn = Instantiate(warning, chosenTransform.position + new Vector3(Random.Range(-2.5f, 2.5f), Random.Range(-2.5f, 2.5f), 0), Quaternion.identity);
         warn.GetComponent<EnemyWarning>().enemyToSpawn = enemy.prefab;
-        warn.GetComponent<EnemyWarning>().enemyHealthMulti = difficultyMultiplier + 0.4f;
-        warn.GetComponent<EnemyWarning>().enemyDamageMulti = 0.5f * difficultyMultiplier  + 0.6f;
+        warn.GetComponent<EnemyWarning>().enemyHealthMulti = 0.8f * difficultyMultiplier + 0.4f;
+        warn.GetComponent<EnemyWarning>().enemyDamageMulti = 0.8f * difficultyMultiplier  + 0.5f;
     }
 }
 

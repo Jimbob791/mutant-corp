@@ -39,7 +39,10 @@ public class DrillObjective : MonoBehaviour
                 if (tutorial)
                     GameManager.instance.LoadMenu();
                 else
+                {
+                    Player.instance.GetComponent<PlayerHealth>().exiting = true;
                     GameManager.instance.LoadMutations();
+                }
             }
             return;
         }
@@ -61,6 +64,8 @@ public class DrillObjective : MonoBehaviour
         {
             objective.text = "Drilling - Stay Alive";
             GetComponent<ObjectiveSpawner>().SpawnWave();
+            GameObject.Find("MainMusic").GetComponent<AudioSource>().clip = GameManager.instance.drillMusic.GetComponent<MainMusic>().songs[0];
+            GameObject.Find("MainMusic").GetComponent<AudioSource>().Play();
             active = true;
             Instantiate(startSFX);
             StartCoroutine(DrillSound());

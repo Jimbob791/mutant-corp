@@ -16,5 +16,5 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 95169080caf9a9d43bb9dac8ba5ab451, type: 3}
   itemName: Bacteriophage
   itemRarity: Special
-  itemDescription: A deadly engineered virus. +5% chance on hit to explode enemies
-    when they die.
+  itemDescription: +4% chance on hit to infect. Infected enemies drop a healing pickup
+    for 2% of their health.

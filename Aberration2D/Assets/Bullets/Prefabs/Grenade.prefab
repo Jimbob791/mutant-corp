@@ -166,7 +166,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   explosionRange: 2
-  explodeSFX: {fileID: 2047436351219239068, guid: 8069357831c2c4243bc65a912ac3c6e2, type: 3}
+  explodeSFX: {fileID: 2047436351219239068, guid: e8246750d098b2f4ab23ee0f50a37e3d, type: 3}
+  launchSFX: {fileID: 0}
 --- !u!95 &8314813257996906828
 Animator:
   serializedVersion: 5

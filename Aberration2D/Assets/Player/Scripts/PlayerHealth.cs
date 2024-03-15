@@ -28,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
 
     bool alive = true;
     bool invincible = false;
+    public bool exiting = false;
 
     void Start()
     {
@@ -48,6 +49,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amount, bool ignoreImmunity)
     {
+        if (exiting)
+        {
+            return;
+        }
         if (amount >= maxHealth && health > maxHealth * 0.9f)
         {
             amount = Mathf.RoundToInt(maxHealth * 0.9f);
@@ -105,9 +110,10 @@ public class PlayerHealth : MonoBehaviour
 
     private void Death()
     {
+        exiting = true;
         Time.timeScale = 0.8f;
         Debug.Log("Death");
-        GameManager.instance.LoadMenu();
+        GameManager.instance.LoadScore(false);
     }
 
     IEnumerator Regen()

@@ -100,6 +100,7 @@ public class BurstSwitch : Item
         PlayerStats.instance.burstSize += 2;
         PlayerStats.instance.fireRate += 0.3f;
         PlayerStats.instance.burstDelay = (PlayerStats.instance.fireRate / 3) / PlayerStats.instance.burstSize;
+        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 0.6f);
     }
 }
 
@@ -140,7 +141,7 @@ public class NosferatuBlood : Item
 
     public override void OnPickup(int stacks)
     {
-        PlayerStats.instance.lifeSteal += 2;
+        PlayerStats.instance.lifeSteal += 1;
     }
 }
 
@@ -328,7 +329,7 @@ public class Bacteriophage : Item
 
     public override void OnHit(GameObject enemy, int stacks)
     {
-        if (Random.Range(0f, 100f) < stacks * 5f)
+        if (Random.Range(0f, 100f) < stacks * 4f)
         {
             enemy.GetComponent<EnemyHealth>().explode = true;
         }
@@ -358,8 +359,22 @@ public class HealingCrystal : Item
 
     public override void OnPickup(int stacks)
     {
-        PlayerStats.instance.maxHealth += 50;
-        Player.instance.GetComponent<PlayerHealth>().TakeDamage(-50 * 5, true);
+        PlayerStats.instance.maxHealth += 40;
+        Player.instance.GetComponent<PlayerHealth>().TakeDamage(-40, true);
+    }
+}
+
+public class MysteryVial : Item
+{
+    public override string GetName()
+    {
+        return "Mystery Vial";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.maxHealth += 70;
+        Player.instance.GetComponent<PlayerHealth>().TakeDamage(-70, true);
     }
 }
 
@@ -389,13 +404,41 @@ public class Nectar : Item
     }
 }
 
+public class SpeedUp : Item
+{
+    public override string GetName()
+    {
+        return "Speed Up";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.reloadTime -= 0.2f;
+        PlayerStats.instance.rollSpeed += 0.2f;
+    }
+}
+
+public class RadarLock : Item
+{
+    public override string GetName()
+    {
+        return "Radar Lock";
+    }
+
+    public override void OnPickup(int stacks)
+    {
+        PlayerStats.instance.bloomAngle -= 5f;
+        PlayerStats.instance.bulletSpeed += 2f;
+    }
+}
+
 // -------------------------------------------------------------- Mutations --------------------------------------------------------------
 
 public class SpringReload : Item
 {
     public override string GetName()
     {
-        return "Spring-loaded Reload";
+        return "Spring Reload";
     }
 
     public override void OnPickup(int stacks)
@@ -405,7 +448,7 @@ public class SpringReload : Item
 
     public override void OnReload(int stacks)
     {
-        Player.instance.GetComponent<PlayerMove>().Jump(1 + stacks, true);
+        Player.instance.GetComponent<PlayerMove>().Jump(stacks, true);
     }
 }
 
@@ -515,11 +558,11 @@ public class DataLicense : Item
     }
 }
 
-public class PheonixTalon : Item
+public class PhoenixTalon : Item
 {
     public override string GetName()
     {
-        return "Pheonix Talon";
+        return "Phoenix Talon";
     }
 
     public override void OnPickup(int stacks)
@@ -538,12 +581,12 @@ public class BipodHands : Item
     public override void OnPickup(int stacks)
     {
         PlayerStats.instance.fireRate *= 4;
-        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 8);
-        PlayerStats.instance.magazineSize = Mathf.RoundToInt(PlayerStats.instance.magazineSize / 4);
+        PlayerStats.instance.damage = Mathf.RoundToInt(PlayerStats.instance.damage * 4);
+        PlayerStats.instance.magazineSize = Mathf.RoundToInt(PlayerStats.instance.magazineSize / 3);
         PlayerStats.instance.bloomAngle = 0;
         PlayerStats.instance.range += 1f;
-        PlayerStats.instance.bulletSpeed += 50f;
-        PlayerStats.instance.reloadTime += 2;
+        PlayerStats.instance.bulletSpeed += 40f;
+        PlayerStats.instance.reloadTime += 3;
     }
 }
 
@@ -570,7 +613,7 @@ public enum Items
     GreenMaple,
     ShotgunCells,
     JavelinSL,
-    PheonixTalon,
+    PhoenixTalon,
     PlasticC4,
     RustedSickle,
     DataLicense,
@@ -582,5 +625,8 @@ public enum Items
     HealingCrystal,
     BipodHands,
     Nectar,
-    SealOfApproval
+    SealOfApproval,
+    MysteryVial,
+    SpeedUp,
+    RadarLock
 }

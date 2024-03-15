@@ -13,12 +13,16 @@ public class InfoHelper : MonoBehaviour
     void Update()
     {
         Vector3 mousePos = Input.mousePosition;
+        Vector2 ratios = new Vector3(mousePos.x / Screen.width, mousePos.y / Screen.height);
+
+        mousePos.x = (ratios.x * 1920) - 960;
+        mousePos.y = (ratios.y * 1080) - 540;
+
         mousePos.z = 0;
+        mousePos.y -= 30;
+        mousePos.x -= 100;
 
-        mousePos.x -= width / 2;
-        mousePos.y -= height / 2;
-
-        transform.position = mousePos;
+        transform.localPosition = mousePos;
     }
 
     public void SetText(string text)

@@ -75,6 +75,13 @@ public class PlayerShoot : MonoBehaviour
         Shoot();
 
         Drones();
+
+        if (Input.GetKeyDown(KeyCode.R) && !reloading)
+        {
+            reloading = true;
+            StartCoroutine(Reload());
+            canShoot = false;
+        }
     }
 
     private void RollingCheck()
@@ -254,6 +261,7 @@ public class PlayerShoot : MonoBehaviour
         reloading = false;
         reloadBar.GetComponent<Image>().enabled = false;
         reloadProgress.GetComponent<Image>().enabled = false;
+        canShoot = true;
     }
 
     public void ShootGrenade()

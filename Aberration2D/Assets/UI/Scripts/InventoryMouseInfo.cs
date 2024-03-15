@@ -48,15 +48,19 @@ public class InventoryMouseInfo : MonoBehaviour
         icon.enabled = display;
         
         Vector3 mousePos = Input.mousePosition;
-        mousePos.x -= 1920 / 2;
-        mousePos.y -= 1080 / 2;
+        Vector2 ratios = new Vector3(mousePos.x / Screen.width, mousePos.y / Screen.height);
+
+        mousePos.x = (ratios.x * 1920) - 960;
+        mousePos.y = (ratios.y * 1080) - 540;
+
         mousePos.z = 0;
 
-        if (mousePos.x > 400)
+        if (mousePos.x > 360)
             mousePos.x -= width / 2;
         else
             mousePos.x += width / 2;
-        mousePos.y -= height / 2;
+
+        mousePos.y -= 100;
 
         transform.localPosition = mousePos;
 

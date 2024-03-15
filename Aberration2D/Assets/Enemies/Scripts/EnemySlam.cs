@@ -13,7 +13,7 @@ public class EnemySlam : MonoBehaviour
     GroundEnemy ground;
     float attackTime;
     float attackCooldown = 3;
-    int numProjectiles = 20;
+    int numProjectiles =  10;
     Vector3 shootDir;
 
     void Start()

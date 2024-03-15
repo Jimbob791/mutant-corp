@@ -43,6 +43,7 @@ public class ItemPickup : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && Physics2D.BoxCast(transform.position, new Vector2(2, 2), 0, Vector2.zero, 0, playerLayer))
         {
             Instantiate(itemSFX);
+            GameManager.instance.numItems += 1;
             Player.instance.GetComponent<PlayerItems>().AddItem(item);
             ItemInfoDisplay.instance.ItemPickedUp(itemDrop);
             GameObject.Find("Inventory").GetComponent<InventoryDisplay>().CreateInventoryItems(Player.instance.GetComponent<PlayerItems>().items);
@@ -131,8 +132,8 @@ public class ItemPickup : MonoBehaviour
                 return new PlasticC4();
             case Items.JavelinSL:
                 return new JavelinSL();
-            case Items.PheonixTalon:
-                return new PheonixTalon();
+            case Items.PhoenixTalon:
+                return new PhoenixTalon();
             case Items.DataLicense:
                 return new DataLicense();
             case Items.RustedSickle:
@@ -153,6 +154,12 @@ public class ItemPickup : MonoBehaviour
                 return new Nectar();
             case Items.SealOfApproval:
                 return new SealOfApproval();
+            case Items.MysteryVial:
+                return new MysteryVial();
+            case Items.SpeedUp:
+                return new SpeedUp();
+            case Items.RadarLock:
+                return new RadarLock();
             default:
                 return new Loudener();
         }

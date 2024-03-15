@@ -216,7 +216,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 120
   health: 0
-  data: 6
+  healthDrop: {fileID: 1845936679388842524, guid: 9502d442f2e82514b93250e6fe38e4de, type: 3}
+  data: 4
   dataPrefab: {fileID: 2664889532157127630, guid: 4a3daceaa3c96d94884117cc935cf88b, type: 3}
   flashTime: 0.1
   bleedDamage: 0
@@ -238,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a64f3321a80cdd4c8a96508814cb8e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
+  damage: 15
   laserPrefab: {fileID: 7299801178311869149, guid: 44261b0c35754894ba644b3935629cd2, type: 3}
   attackRange: 20
   cooldown: 4

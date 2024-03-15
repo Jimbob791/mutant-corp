@@ -67,8 +67,6 @@ public class PlayerStats : MonoBehaviour
             fireRate = 0;
         if (magazineSize < 1)
             magazineSize = 1;
-        if (reloadTime < 0)
-            reloadTime = 0;
         if (maxHealth < 1)
             maxHealth = 1;
         if (lifeSteal < 0)
@@ -81,6 +79,10 @@ public class PlayerStats : MonoBehaviour
             bulletSpeed = 1;
         if (range < 0.1f)
             range = 0.1f;
+        if (bloomAngle < 0)
+            bloomAngle = 0;
+        if (reloadTime < fireRate)
+            reloadTime = fireRate;
 
         playerMove.moveSpeed = moveSpeed;
         playerMove.jumpForce = jumpForce;

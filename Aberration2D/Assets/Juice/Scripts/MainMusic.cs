@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainMusic : MonoBehaviour
 {
-    [SerializeField] List<AudioClip> songs = new List<AudioClip>();
+    public List<AudioClip> songs = new List<AudioClip>();
     
     IEnumerator Start()
     {

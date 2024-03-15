@@ -26,7 +26,7 @@ public class Grenade : MonoBehaviour
         }
         Destroy(effect, 2f);
         Instantiate(explodeSFX);
-        GameManager.instance.Shake(0.05f, 0.1f);
+        GameManager.instance.Shake(0.1f, 0.2f);
         Destroy(this.gameObject);
     }
 }

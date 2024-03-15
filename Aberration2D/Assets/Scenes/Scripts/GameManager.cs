@@ -10,10 +10,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<string> stages = new List<string>();
     public float difficulty = 0;
     public string mode;
-    [SerializeField] float globalTimer;
+    public int numEnemiesKilled;
+    public int damageDealt;
+    public int numItems;
+    public float globalTimer;
     [SerializeField] GameObject slamSFX;    
     [SerializeField] GameObject closeSFX;   
     [SerializeField] GameObject openSFX;   
+    public bool won = false;
+    public GameObject drillMusic;
 
     bool count = true;
 
@@ -31,17 +36,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void OnSceneLoaded(Scene scene, LoadSceneMode _mode)
     {
-        if (scene.name != "Mutations" && scene.name != "Menu")
+        if (scene.name != "Mutations" && scene.name != "Menu" && scene.name != "Score")
         {
             ItemStorage.instance.LoadItems();
             
             GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
             for (int i = 0; i < spawners.Length; i++)
             {
-                if (spawners[i].GetComponent<EnemySpawner>() != null) spawners[i].GetComponent<EnemySpawner>().difficultyMultiplier = Mathf.Pow(1.5f, (difficulty - 2));
-                if (spawners[i].GetComponent<ObjectiveSpawner>() != null) spawners[i].GetComponent<ObjectiveSpawner>().difficultyMultiplier = Mathf.Pow(1.5f, (difficulty - 2));
+                if (mode == "EasyTime")
+                {
+                    if (spawners[i].GetComponent<EnemySpawner>() != null) spawners[i].GetComponent<EnemySpawner>().difficultyMultiplier = Mathf.Pow(1.5f, (difficulty - 2));
+                    if (spawners[i].GetComponent<ObjectiveSpawner>() != null) spawners[i].GetComponent<ObjectiveSpawner>().difficultyMultiplier = Mathf.Pow(1.5f, (difficulty - 2));
+                }
+                if (mode == "MedTime")
+                {
+                    if (spawners[i].GetComponent<EnemySpawner>() != null) spawners[i].GetComponent<EnemySpawner>().difficultyMultiplier = Mathf.Pow(1.5f, (difficulty - 2));
+                    if (spawners[i].GetComponent<ObjectiveSpawner>() != null) spawners[i].GetComponent<ObjectiveSpawner>().difficultyMultiplier = Mathf.Pow(1.5f, (difficulty - 2));
+                }
+                if (mode == "HardTime")
+                {
+                    if (spawners[i].GetComponent<EnemySpawner>() != null) spawners[i].GetComponent<EnemySpawner>().difficultyMultiplier = Mathf.Pow(1.6f, (difficulty));
+                    if (spawners[i].GetComponent<ObjectiveSpawner>() != null) spawners[i].GetComponent<ObjectiveSpawner>().difficultyMultiplier = Mathf.Pow(1.6f, (difficulty));
+                }
             }
 
             PlayerStats.instance.SetPlayerStats();
@@ -53,6 +71,10 @@ public class GameManager : MonoBehaviour
         }
         else if (scene.name == "Menu")
         {
+            won = false;
+            damageDealt = 0;
+            numItems = 0;
+            numEnemiesKilled = 0;
             count = true;
             Time.timeScale = 1;
             globalTimer = 0;
@@ -108,25 +130,25 @@ public class GameManager : MonoBehaviour
             if (mode == "EasyTime" && difficulty == 5)
             {
                 count = false;
-                PlayerPrefs.SetFloat("EasyTime", globalTimer);
-                GameObject.Find("Loading").GetComponent<Animator>().SetBool("load", true);
-                StartCoroutine(Load("Menu"));
+                if (PlayerPrefs.GetFloat("EasyTime") < globalTimer || !PlayerPrefs.HasKey("EasyTime"))
+                    PlayerPrefs.SetFloat("EasyTime", globalTimer);
+                LoadScore(true);
                 return;
             }
             if (mode == "MedTime" && difficulty == 8)
             {
                 count = false;
-                PlayerPrefs.SetFloat("MedTime", globalTimer);
-                GameObject.Find("Loading").GetComponent<Animator>().SetBool("load", true);
-                StartCoroutine(Load("Menu"));
+                if (PlayerPrefs.GetFloat("MedTime") < globalTimer || !PlayerPrefs.HasKey("MedTime"))
+                    PlayerPrefs.SetFloat("MedTime", globalTimer);
+                LoadScore(true);
                 return;
             }
             if (mode == "HardTime" && difficulty == 15)
             {
                 count = false;
-                PlayerPrefs.SetFloat("HardTime", globalTimer);
-                GameObject.Find("Loading").GetComponent<Animator>().SetBool("load", true);
-                StartCoroutine(Load("Menu"));
+                if (PlayerPrefs.GetFloat("HardTime") < globalTimer || !PlayerPrefs.HasKey("HardTime"))
+                    PlayerPrefs.SetFloat("HardTime", globalTimer);
+                LoadScore(true);
                 return;
             }
         }
@@ -139,6 +161,13 @@ public class GameManager : MonoBehaviour
     {
         GameObject.Find("Loading").GetComponent<Animator>().SetBool("load", true);
         StartCoroutine(Load("Menu"));
+    }
+
+    public void LoadScore(bool win)
+    {
+        won = win;
+        GameObject.Find("Loading").GetComponent<Animator>().SetBool("load", true);
+        StartCoroutine(Load("Score"));
     }
 
     public void LoadTutorial()
@@ -169,13 +198,13 @@ public class GameManager : MonoBehaviour
 
     public void TimeFreeze(float t)
     {
-        StartCoroutine(Freeze());
+        StartCoroutine(Freeze(t));
     }
 
-    private IEnumerator Freeze()
+    private IEnumerator Freeze(float duration)
     {
         Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(0.03f);
+        yield return new WaitForSecondsRealtime(duration);
         Time.timeScale = 1;
     }
 
@@ -199,7 +228,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (SceneManager.GetActiveScene().name != "Menu" && SceneManager.GetActiveScene().name != "Mutations" && SceneManager.GetActiveScene().name != "Tutorial")
+        if (SceneManager.GetActiveScene().name != "Menu" && SceneManager.GetActiveScene().name != "Mutations" && SceneManager.GetActiveScene().name != "Tutorial" && SceneManager.GetActiveScene().name != "Score")
         {
             if (count) globalTimer += Time.deltaTime;
             GameObject.Find("TimerDisplay").GetComponent<TextMeshProUGUI>().text = ConvertTimeToString(globalTimer);

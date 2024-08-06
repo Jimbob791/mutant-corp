@@ -963,13 +963,12 @@ MonoBehaviour:
 
     Tab - Open Inventory
 
-    Roll - Space
-    Bar (Gives heaps of invincibility frames)
+    Roll - Left
+    Shift (Gives heaps of invincibility frames)
 
-    R - Premature Reload
+    R - Reload
 
-    Escape
-    - Pause'
+    Escape - Pause'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f83ddeffc2935b4b839cdf38ceecb5a, type: 2}
   m_sharedMaterial: {fileID: 4429829675343548665, guid: 2f83ddeffc2935b4b839cdf38ceecb5a, type: 2}

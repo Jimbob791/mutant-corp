@@ -107,7 +107,7 @@ public class PlayerMove : MonoBehaviour
     private void GetInput()
     {
         xInput = Convert.ToInt32(Input.GetKey(KeyCode.D)) - Convert.ToInt32(Input.GetKey(KeyCode.A));
-        timeSinceJump = Input.GetKeyDown(KeyCode.W) ? 0 : timeSinceJump;
+        timeSinceJump = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) ? 0 : timeSinceJump;
 
         if (!canMove)
         {

@@ -31,7 +31,7 @@ public class PlayerRoll : MonoBehaviour
 
     private void GetInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !rolling && !rollDesired)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !rolling && !rollDesired)
         {
             rollDesired = true;
         }
